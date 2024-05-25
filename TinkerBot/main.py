@@ -38,11 +38,16 @@ def turn_left(angle):
 
 
 def grab():
-    crane_motor.run_angle(speed=100, rotation_angle=45, then=Stop.HOLD, wait=True)
-    claw_motor.run_angle(speed=100, rotation_angle=-40, then=Stop.HOLD, wait=True)
-    crane_motor.run_angle(speed=100, rotation_angle=40, then=Stop.HOLD, wait=True)
-    claw_motor.run_angle(speed=100, rotation_angle=60, then=Stop.HOLD, wait=True)
+#
+    claw_motor.run_angle(speed=100, rotation_angle=90,  wait=False)
+    crane_motor.run_angle(speed=100, rotation_angle=60, wait=True)
+    crane_motor.stalled()
+   
+#    claw_motor.run_angle(speed=100, rotation_angle=40, wait=False)
+#    claw_motor.run_angle(speed=100, rotation_angle=40, then=Stop.HOLD, wait=False)
+#    crane_motor.run_angle(speed=1000, rotation_angle=1500, then=Stop.HOLD, wait=True)
 
+print("done")
 # claw angle range is 45 degrees to open and close 
 
 
