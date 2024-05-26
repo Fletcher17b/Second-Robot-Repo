@@ -36,13 +36,22 @@ def turn_left(angle):
     angle = angle*-1
     robot.curve(120,angle,then=Stop, wait=False)
 
+def unstuck():
+    crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=50)
+    crane_motor.run_angle(speed=100, rotation_angle=10, wait=True)
+    crane_motor.stalled()
+
 
 def grab():
 #
-    claw_motor.run_angle(speed=100, rotation_angle=90,  wait=False)
+    claw_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=50)
     crane_motor.run_angle(speed=100, rotation_angle=60, wait=True)
     crane_motor.stalled()
-   
+
+def drop():
+    claw_motor.run_angle(speed=100, rotation_angle=-90,  wait=False)
+    crane_motor.run_angle(speed=100, rotation_angle=-60, wait=True)
+    crane_motor.stalled()
 #    claw_motor.run_angle(speed=100, rotation_angle=40, wait=False)
 #    claw_motor.run_angle(speed=100, rotation_angle=40, then=Stop.HOLD, wait=False)
 #    crane_motor.run_angle(speed=1000, rotation_angle=1500, then=Stop.HOLD, wait=True)
@@ -61,10 +70,15 @@ def initial_moveset(start_type):
         turn_left(90)
 
 
+
     
 
 try:
+    # unstuck()
+    # wait(1000)
     grab()
+    wait(1000)
+    drop()
     wait(2000)
     initial_moveset(1)
 
