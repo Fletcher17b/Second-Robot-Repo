@@ -48,6 +48,7 @@ def initial_claw_position():
 def grab():
 #
     claw_motor.run_until_stalled(100)
+    claw_motor.run(speed=100)
     wait(1000)
     crane_motor.run_time(speed=100, time=500, then=Stop.HOLD, wait=True)
     
@@ -113,7 +114,9 @@ try:
     print("a")
     robot.stop()
     print("a")
-    green_motor.run_time(speed=90,time=2200,wait=False)
+    green_motor.run_time(speed=90,time=2250,wait=False)
+
+    print("turning 1")
     blue_motor.run_time(speed=-90,time=3000,wait=True)
 
     drop()
@@ -124,6 +127,10 @@ try:
     print("a")
     wait(1000)
     grab() 
+
+    robot.drive(speed=-94,turn_rate=0)
+    wait(1750)
+    robot.stop()
 
 #    unstuck()
 #    print("Unstuck exits")
