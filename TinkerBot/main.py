@@ -7,9 +7,11 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 import Aux_file
-
+import r2_PID
 
 ev3 = EV3Brick()
+
+
 
 green_motor = Motor(Port.A)
 blue_motor = Motor(Port.D)
@@ -95,7 +97,8 @@ def initial_moveset(start_type):
 
 
 
-    
+boolean_1 = False    
+counter = 0
 
 try:
     # claw_motor.run_angle(speed=100, rotation_angle=90, wait=True)
@@ -104,6 +107,8 @@ try:
     unstuck()
     initialize_claw()
 
+    
+    
 
     robot.drive(speed=-94,turn_rate=0)
     wait(1000)
@@ -116,9 +121,13 @@ try:
 
 #-------------------
     print("Second turn")
+    
     green_motor.run_time(speed=90,time=2200,wait=False)
     blue_motor.run_time(speed=-90,time=3000,wait=True)
-    print("advance")
+    while True:
+        print(gyro_sensor.angle())
+        if abs(gyro_sensor.angle()) >= 90:
+            break
 
 #------------------------
     print("Third Phase")
