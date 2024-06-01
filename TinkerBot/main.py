@@ -16,12 +16,14 @@ blue_motor = Motor(Port.D)
 crane_motor = Motor(Port.B)
 claw_motor = Motor(Port.C)
 
-claw_sensor = ColorSensor(Port.S4)
+claw_sensor = ColorSensor(Port.S3)
 gyro_sensor = GyroSensor(Port.S2)
 LineSensor_left = ColorSensor(Port.S1)
-LineSensor_right = ColorSensor(Port.S3)
+LineSensor_right = ColorSensor(Port.S4)
 
 robot = DriveBase(green_motor,blue_motor,68.8,185)
+
+initial_angle=0
 
 #########
 #funciones'
@@ -40,16 +42,20 @@ def unstuck():
     crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=41) 
     crane_motor.run_time(speed=90, time=200)
 
-    
+
  
-def initial_claw_position():
-    g=1;
+def initialize_claw():
+    claw_motor.run_until_stalled(speed=100,then=Stop.BRAKE)
+    initial_angle=claw_motor.angle()
+    print("Claw angle: ")
+    print(initial_angle)
+
+
 
 def grab():
 #
     claw_motor.run_until_stalled(100)
-    claw_motor.run(speed=100)
-    wait(1000)
+    claw_motor.run(speed=700)
     crane_motor.run_time(speed=100, time=500, then=Stop.HOLD, wait=True)
     
 def drop_ontop():
@@ -96,6 +102,9 @@ try:
     # drop()
     # wait(1000)
     unstuck()
+    initialize_claw()
+
+
     robot.drive(speed=-94,turn_rate=0)
     wait(1000)
     robot.stop()
@@ -104,36 +113,38 @@ try:
     wait(1700)
     robot.stop()
     wait(100)
+
+#-------------------
+    print("Second turn")
     green_motor.run_time(speed=90,time=2200,wait=False)
     blue_motor.run_time(speed=-90,time=3000,wait=True)
     print("advance")
 
-
+#------------------------
+    print("Third Phase")
     robot.drive(speed=94,turn_rate=0)
     wait(3000)
-    print("a")
     robot.stop()
-    print("a")
+    print("turning 2")
     green_motor.run_time(speed=90,time=2250,wait=False)
-
-    print("turning 1")
+    print("turning 2")
     blue_motor.run_time(speed=-90,time=3000,wait=True)
 
-    drop()
+#------------------------
+    claw_motor.run_angle(speed=100,rotation_angle=initial_angle-85)
     robot.drive(speed=94,turn_rate=0)
     wait(1750)
-    print("a")
+    print("a4")
     robot.stop()
-    print("a")
+    print("a5")
     wait(1000)
     grab() 
 
-    robot.drive(speed=-94,turn_rate=0)
-    wait(1750)
-    robot.stop()
+#    robot.drive(speed=-94,turn_rate=0)
+#    wait(1750)
+#    robot.stop()
 
-#    unstuck()
-#    print("Unstuck exits")
+
 #    wait(1000)
 #    claw_motor.run_angle(speed=100, rotation_angle=-40, wait=True)
 #    wait(1000)
