@@ -146,7 +146,7 @@ try:
         green_motor.run(100)
         blue_motor.run(-100)
         current_angle = gyro_sensor.angle()
-        if current_angle >= stopAngle +83:
+        if current_angle >= stopAngle +85:
             robot.stop()
             stopAngle = gyro_sensor.angle()
             break
@@ -155,14 +155,12 @@ try:
     claw_motor.run_angle(speed=100,rotation_angle=initial_angle-85)
     robot.drive(speed=94,turn_rate=0)
     wait(1500)
-    print("a4")
     robot.stop()
-    print("a5")
     wait(1000)
     grab() 
     print(gyro_sensor.angle())
     robot.drive(speed=-94,turn_rate=0)
-    wait(1750)
+    wait(1800)
     robot.stop()
     
     print(gyro_sensor.angle())
@@ -189,6 +187,11 @@ try:
             robot.stop()
             stopAngle = gyro_sensor.angle()
             break
+    robot.drive(speed=94,turn_rate=0)
+    wait(1950)
+    robot.stop()
+    crane_motor.run_until_stalled(100)
+    drop()
 
 
 #    wait(1000)
