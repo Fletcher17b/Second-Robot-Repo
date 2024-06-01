@@ -57,7 +57,6 @@ def initialize_claw():
 def grab():
 #
     claw_motor.run_until_stalled(100)
-    claw_motor.run(speed=700)
     crane_motor.run_time(speed=100, time=500, then=Stop.HOLD, wait=True)
     
 def drop_ontop():
@@ -108,50 +107,88 @@ try:
     initialize_claw()
 
     
-    
-
+    print("angle:")
+    print(gyro_sensor.angle()) 
     robot.drive(speed=-94,turn_rate=0)
-    wait(1000)
+    wait(1200)
     robot.stop()
     wait(1000)
     robot.drive(speed=94,turn_rate=0)
     wait(1700)
     robot.stop()
     wait(100)
+    stopAngle = gyro_sensor.angle()
 
 #-------------------
     print("Second turn")
-    
-    green_motor.run_time(speed=90,time=2200,wait=False)
-    blue_motor.run_time(speed=-90,time=3000,wait=True)
+    print(stopAngle)
     while True:
-        print(gyro_sensor.angle())
-        if abs(gyro_sensor.angle()) >= 90:
+        green_motor.run(100)
+        blue_motor.run(-100)
+        current_angle = gyro_sensor.angle()
+        if current_angle >= stopAngle + 87:
+            robot.stop()
+            stopAngle = gyro_sensor.angle()
             break
+    print(gyro_sensor.angle())    
 
 #------------------------
     print("Third Phase")
+    
     robot.drive(speed=94,turn_rate=0)
-    wait(3000)
+    wait(2700)
     robot.stop()
     print("turning 2")
-    green_motor.run_time(speed=90,time=2250,wait=False)
-    print("turning 2")
-    blue_motor.run_time(speed=-90,time=3000,wait=True)
-
+    print(stopAngle)
+    print("gyro angle")
+    print(gyro_sensor.angle())
+    while True:
+        green_motor.run(100)
+        blue_motor.run(-100)
+        current_angle = gyro_sensor.angle()
+        if current_angle >= stopAngle +83:
+            robot.stop()
+            stopAngle = gyro_sensor.angle()
+            break
+    
 #------------------------
     claw_motor.run_angle(speed=100,rotation_angle=initial_angle-85)
     robot.drive(speed=94,turn_rate=0)
-    wait(1750)
+    wait(1500)
     print("a4")
     robot.stop()
     print("a5")
     wait(1000)
     grab() 
+    print(gyro_sensor.angle())
+    robot.drive(speed=-94,turn_rate=0)
+    wait(1750)
+    robot.stop()
+    
+    print(gyro_sensor.angle())
 
-#    robot.drive(speed=-94,turn_rate=0)
-#    wait(1750)
-#    robot.stop()
+
+    while True:
+        green_motor.run(-100)
+        blue_motor.run(100)
+        current_angle = gyro_sensor.angle()
+        if current_angle <= stopAngle -87:
+            robot.stop()
+            stopAngle = gyro_sensor.angle()
+            break
+     
+    robot.drive(speed=94,turn_rate=0)
+    wait(1000)
+    robot.stop()
+
+    while True:
+        green_motor.run(100)
+        blue_motor.run(-100)
+        current_angle = gyro_sensor.angle()
+        if current_angle >= stopAngle + 85:
+            robot.stop()
+            stopAngle = gyro_sensor.angle()
+            break
 
 
 #    wait(1000)
