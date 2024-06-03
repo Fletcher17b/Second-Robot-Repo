@@ -6,8 +6,6 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-import Aux_file
-import r2_PID
 
 ev3 = EV3Brick()
 
@@ -30,39 +28,23 @@ initial_angle=0
 #########
 #funciones'
 
-def advance_1():
-    robot.straight(distance=20,then= Stop.HOLD,wait=False)
-
-def turn_right(angle):
-    robot.curve(120,angle,then=Stop, wait=False)
-
-def turn_left(angle):
-    angle = angle*-1
-    robot.curve(120,angle,then=Stop, wait=False)
-
 def unstuck():
     crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=41) 
     crane_motor.run_time(speed=90, time=200)
 
-
- 
 def initialize_claw():
     claw_motor.run_until_stalled(speed=100,then=Stop.BRAKE)
     initial_angle=claw_motor.angle()
-    print("Claw angle: ")
-    print(initial_angle)
-
-
+    print("Claw angle: ",initial_angle)
 
 def grab():
-#
+
     claw_motor.run_until_stalled(100)
     crane_motor.run_time(speed=100, time=500, then=Stop.HOLD, wait=True)
     
 def drop_ontop():
     print("1")
     claw_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=41)
- #   crane_motor.run_angle(speed=100, rotation_angle=-40)
     crane_motor.stalled()
     print("2")
     robot.drive(speed=94,turn_rate=0)
@@ -74,53 +56,17 @@ def drop_ontop():
 
 def drop():
     claw_motor.run_angle(speed=100, rotation_angle=-90, wait=True)
- #   crane_motor.run_angle(speed=100, rotation_angle=-40)
     crane_motor.stalled()
 
-#    claw_motor.run_angle(speed=100, rotation_angle=40, wait=False)
-#    claw_motor.run_angle(speed=100, rotation_angle=40, then=Stop.HOLD, wait=False)
-#    crane_motor.run_angle(speed=1000, rotation_angle=1500, then=Stop.HOLD, wait=True)
-
-
-# claw angle range is 45 degrees to open and close 
-
-
-def initial_moveset(start_type):
-    robot.robot.straight(distance=-200,then= Stop.HOLD,wait=False)
-    robot.robot.straight(distance=400,then= Stop.HOLD,wait=False)
-
-    if (start_type==1): 
-        turn_right(90)
-    else: 
-        turn_left(90)
-
-
-
-boolean_1 = False    
-counter = 0
-
-try:
-    # claw_motor.run_angle(speed=100, rotation_angle=90, wait=True)
-    # drop()
-    # wait(1000)
-    unstuck()
-    initialize_claw()
-
+def turn_(direction, angle):
+    a =100
+    b =-100
+    if direction==1:
+        a = a*-1
+        b= b*-1
     
-    print("angle:")
-    print(gyro_sensor.angle()) 
-    robot.drive(speed=-94,turn_rate=0)
-    wait(1200)
-    robot.stop()
-    wait(1000)
-    robot.drive(speed=94,turn_rate=0)
-    wait(1700)
-    robot.stop()
-    wait(100)
-    stopAngle = gyro_sensor.angle()
 
-#-------------------
-    print("Second turn")
+
     print(stopAngle)
     while True:
         green_motor.run(100)
@@ -130,28 +76,60 @@ try:
             robot.stop()
             stopAngle = gyro_sensor.angle()
             break
-    print(gyro_sensor.angle())    
+    print(gyro_sensor.angle())  
 
-#------------------------
-    print("Third Phase")
+
+try:
     
-    robot.drive(speed=94,turn_rate=0)
-    wait(2700)
+
+    unstuck()
+    initialize_claw()
+    print("robot angle:",gyro_sensor.angle())
+    robot.drive(speed=-94,turn_rate=0)
+    wait(1200)
     robot.stop()
-    print("turning 2")
-    print(stopAngle)
-    print("gyro angle")
-    print(gyro_sensor.angle())
+    wait(1000)
+    robot.drive(speed=94,turn_rate=0)
+    wait(1700)
+    robot.stop()
+    wait(100)
+    stopAngle = gyro_sensor.angle()
+    wait(5000)
+#-------------------
+    print("First turn")
+    print("stopAngle:",stopAngle)
     while True:
         green_motor.run(100)
         blue_motor.run(-100)
         current_angle = gyro_sensor.angle()
-        if current_angle >= stopAngle +85:
+        if current_angle >= stopAngle + 87:
             robot.stop()
             stopAngle = gyro_sensor.angle()
             break
-    
+    print("gyro: ", gyro_sensor.angle())    
+
+    wait(5000)
 #------------------------
+    print("2")
+    
+    robot.drive(speed=94,turn_rate=0)
+    wait(2700)
+    robot.stop()
+    print("stopAngle: ",stopAngle)
+    print("gyro angle: ",gyro_sensor.angle())
+
+    while True:
+        green_motor.run(100)
+        blue_motor.run(-100)
+        current_angle = gyro_sensor.angle()
+        if current_angle >= stopAngle +88:
+            robot.stop()
+            stopAngle = gyro_sensor.angle()
+            break
+    wait(5000)
+#------------------------
+    print("Aproaching first block")
+    
     claw_motor.run_angle(speed=100,rotation_angle=initial_angle-85)
     robot.drive(speed=94,turn_rate=0)
     wait(1500)
@@ -166,6 +144,7 @@ try:
     print(gyro_sensor.angle())
 
 
+#-------------------------
     while True:
         green_motor.run(-100)
         blue_motor.run(100)
@@ -192,20 +171,6 @@ try:
     robot.stop()
     crane_motor.run_until_stalled(100)
     drop()
-
-
-#    wait(1000)
-#    claw_motor.run_angle(speed=100, rotation_angle=-40, wait=True)
-#    wait(1000)
-#    
-#    grab() 
-#    print("Grab exits")
-    
-#    drop_ontop()
-#    print("Drop EXITS")
-
-    # wait(2000)
-    # initial_moveset(1)
 
 
 
