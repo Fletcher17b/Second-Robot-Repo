@@ -30,7 +30,7 @@ initial_angle=0
 
 def unstuck():
     crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=41) 
-    crane_motor.run_time(speed=90, time=200)
+    crane_motor.run_time(speed=90, time=170)
 
 def initialize_claw():
     claw_motor.run_until_stalled(speed=100,then=Stop.BRAKE)
@@ -38,7 +38,6 @@ def initialize_claw():
     print("Claw angle: ",initial_angle)
 
 def grab():
-
     claw_motor.run_until_stalled(100)
     crane_motor.run_time(speed=100, time=500, then=Stop.HOLD, wait=True)
     
