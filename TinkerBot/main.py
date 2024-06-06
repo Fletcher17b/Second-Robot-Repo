@@ -16,10 +16,9 @@ blue_motor = Motor(Port.D)
 crane_motor = Motor(Port.B)
 claw_motor = Motor(Port.C)
 
-claw_sensor = ColorSensor(Port.S3)
 gyro_sensor = GyroSensor(Port.S2)
 LineSensor_left = ColorSensor(Port.S1)
-LineSensor_right = ColorSensor(Port.S4)
+LineSensor_right = ColorSensor(Port.S3)
 
 robot = DriveBase(green_motor,blue_motor,68.8,185)
 
@@ -30,7 +29,7 @@ initial_angle=0
 
 def unstuck():
     crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=41) 
-    crane_motor.run_time(speed=90, time=170)
+    crane_motor.run_time(speed=90, time=160)
 
 def initialize_claw():
     claw_motor.run_until_stalled(speed=100,then=Stop.BRAKE)
@@ -93,7 +92,7 @@ try:
     robot.stop()
     wait(100)
     stopAngle = gyro_sensor.angle()
-    wait(5000)
+    wait(1000)
 #-------------------
     print("First turn")
     print("stopAngle:",stopAngle)
@@ -107,7 +106,7 @@ try:
             break
     print("gyro: ", gyro_sensor.angle())    
 
-    wait(5000)
+    wait(1000)
 #------------------------
     print("2")
     
@@ -166,9 +165,9 @@ try:
             stopAngle = gyro_sensor.angle()
             break
     robot.drive(speed=94,turn_rate=0)
-    wait(1950)
+    wait(2100)
     robot.stop()
-    crane_motor.run_until_stalled(100)
+    wait(1000)
     drop()
 
 
