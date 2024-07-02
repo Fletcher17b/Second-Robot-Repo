@@ -31,14 +31,9 @@ initial_angle=0
 #funciones'
 
 def unstuck():
-<<<<<<< Updated upstream
     
     crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=10) 
     
-=======
-    crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=41) 
-    crane_motor.run_time(speed=90, time=160)
->>>>>>> Stashed changes
 
 def initialize_claw():
     claw_motor.run_until_stalled(speed=-100,then=Stop.BRAKE)
@@ -46,18 +41,13 @@ def initialize_claw():
     print("Claw angle: ",initial_angle)
 
 def grab():
-<<<<<<< Updated upstream
     claw_motor.run(-100)
     print("SI paso\n")
     crane_motor.run_time(speed=50, time=700, then=Stop.HOLD, wait=True)
-=======
-    claw_motor.run_until_stalled(100)
-    crane_motor.run_time(speed=100, time=500, then=Stop.HOLD, wait=True)
->>>>>>> Stashed changes
     
 def drop_ontop():
     print("1")
-    claw_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=41)
+    claw_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=30)
     crane_motor.stalled()
     print("2")
     robot.drive(speed=94,turn_rate=0)
@@ -68,11 +58,7 @@ def drop_ontop():
     drop()
 
 def drop():
-<<<<<<< Updated upstream
     claw_motor.run_angle(speed=-100, rotation_angle=-100, wait=True)
-=======
-    claw_motor.run_angle(speed=100, rotation_angle=-90, wait=True)
->>>>>>> Stashed changes
     crane_motor.stalled()
 
 
@@ -93,7 +79,6 @@ def turn_left(angle):
     print(gyro_sensor.angle())  
 
 
-<<<<<<< Updated upstream
 def turn_right(angle):
     
     stopAngle =gyro_sensor.angle()
@@ -109,17 +94,11 @@ def turn_right(angle):
     print(gyro_sensor.angle())  
 
 def thingy_we_were_working_before():
-=======
-try:
-    
-   # PID()
->>>>>>> Stashed changes
     unstuck()
     initialize_claw()
-    grab()
     print("robot angle:",gyro_sensor.angle())
     robot.drive(speed=-94,turn_rate=0)
-    wait(1200)
+    wait(1400)
     robot.stop()
     wait(1000)
     robot.drive(speed=94,turn_rate=0)
@@ -146,23 +125,33 @@ try:
     print("2")
     
     robot.drive(speed=94,turn_rate=0)
-    wait(2700)
+    print("OMGGGGG")
+    wait(2200)
+    print(LineSensor_right.reflection())
+    while LineSensor_right.color() != Color.RED:
+        robot.drive(speed=20,turn_rate=0)
+        wait(100)
+        print("Left: ", LineSensor_left.reflection())
+        print("Right: ", LineSensor_right.reflection())
     robot.stop()
     print("stopAngle: ",stopAngle)
     print("gyro angle: ",gyro_sensor.angle())
-
+    wait(100)
+    robot.drive(speed=-94,turn_rate=0)
+    wait(90)
+    robot.stop()
     while True:
         green_motor.run(100)
         blue_motor.run(-100)
         current_angle = gyro_sensor.angle()
-        if current_angle >= stopAngle +88:
+        if current_angle >= stopAngle + 85:
             robot.stop()
             stopAngle = gyro_sensor.angle()
             break
-    wait(5000)
+    wait(1000)
+    
 #------------------------
     print("Aproaching first block")
-<<<<<<< Updated upstream
     claw_motor.run_angle(speed=-100,rotation_angle=initial_angle-85)
     robot.drive(speed=94,turn_rate=0)
     wait(1300)
@@ -175,15 +164,6 @@ try:
     crane_motor.run_angle(speed=60,rotation_angle=60)
 
 
-=======
-    
-    claw_motor.run_angle(speed=100,rotation_angle=initial_angle-85)
-    robot.drive(speed=94,turn_rate=0)
-    wait(1500)
-    robot.stop()
-    wait(1000)
-    grab() 
->>>>>>> Stashed changes
     print(gyro_sensor.angle())
     robot.drive(speed=-94,turn_rate=0)
     wait(1800)
@@ -191,24 +171,19 @@ try:
     
     print(gyro_sensor.angle())
 
-
+    
 #-------------------------
     while True:
-        green_motor.run(-100)
-        blue_motor.run(100)
+        green_motor.run(-70)
+        blue_motor.run(70)
         current_angle = gyro_sensor.angle()
         if current_angle <= stopAngle -87:
             robot.stop()
             stopAngle = gyro_sensor.angle()
             break
      
-<<<<<<< Updated upstream
     robot.drive(speed=70,turn_rate=0)
     wait(1650)
-=======
-    robot.drive(speed=94,turn_rate=0)
-    wait(1000)
->>>>>>> Stashed changes
     robot.stop()
     
 
@@ -216,7 +191,6 @@ try:
         green_motor.run(100)
         blue_motor.run(-100)
         current_angle = gyro_sensor.angle()
-<<<<<<< Updated upstream
         if current_angle >= stopAngle + 87:
             robot.stop()
             stopAngle = gyro_sensor.angle()
@@ -275,17 +249,6 @@ def first_phase():
 
  #  girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=4,velocidad=100)
    moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=17)
-=======
-        if current_angle >= stopAngle + 85:
-            robot.stop()
-            stopAngle = gyro_sensor.angle()
-            break
-    robot.drive(speed=94,turn_rate=0)
-    wait(2100)
-    robot.stop()
-    wait(1000)
-    drop()
->>>>>>> Stashed changes
 
 
 
