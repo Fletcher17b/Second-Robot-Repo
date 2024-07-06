@@ -6,7 +6,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-from aux_file import girar_90_grados
+from Aux_file import girar_90_grados
 
 ev3 = EV3Brick()
 
@@ -245,12 +245,14 @@ def first_phase():
    crane_motor.stop()
    claw_motor.run_until_stalled(speed=-100)
    
+   
    crane_motor.run_angle(speed=50,rotation_angle=20)
 
  #  girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=4,velocidad=100)
    moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=17)
+   girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=-20,velocidad=100)
 
-
+   crane_motor.run_target(speed=100, target_angle=85)
 
 
 
