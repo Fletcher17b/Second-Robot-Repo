@@ -6,7 +6,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-from Aux_file import girar_90_grados
+from aux_file import girar_90_grados
 
 ev3 = EV3Brick()
 
@@ -36,7 +36,9 @@ def unstuck():
     
 
 def initialize_claw():
-    claw_motor.run_until_stalled(speed=-100,then=Stop.BRAKE)
+    crane_motor.reset_angle
+    crane_motor.run_target(speed=100, target_angle=85)
+    #claw_motor.run_until_stalled(speed=-100,then=Stop.BRAKE)
     initial_angle=claw_motor.angle()
     print("Claw angle: ",initial_angle)
 
@@ -237,23 +239,24 @@ def moviemiento_recto(motor_b, motor_c, distancia):
 
 def first_phase():
    initialize_claw()
-   moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=18)
+   moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=17.8)
    girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=4,velocidad=100)
    moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=33)
 
    claw_motor.run_angle(speed=50,rotation_angle=initial_angle+85)
    crane_motor.stop()
    claw_motor.run_until_stalled(speed=-100)
-   
+   crane_motor.run_target(speed=50, target_angle=30)
    
    crane_motor.run_angle(speed=50,rotation_angle=20)
 
  #  girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=4,velocidad=100)
-   moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=17)
+   moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=18)
    girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=-20,velocidad=100)
 
-   crane_motor.run_target(speed=100, target_angle=85)
-
+   crane_motor.run_target(speed=25, target_angle=90)
+   girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=15.4,velocidad=50)
+   claw_motor.run_angle(speed=50,rotation_angle=initial_angle+130)
 
 
 
