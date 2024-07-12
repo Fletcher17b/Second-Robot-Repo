@@ -7,9 +7,9 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from aux_file import girar_90_grados
+import math
 
 ev3 = EV3Brick()
-
 
 
 green_motor = Motor(Port.A)
@@ -23,7 +23,8 @@ gyro_sensor = GyroSensor(Port.S2)
 LineSensor_left = ColorSensor(Port.S1)
 LineSensor_right = ColorSensor(Port.S4)
 
-robot = DriveBase(green_motor,blue_motor,68.8,185)
+DIAMETRO_RUEDA_MM = 68.8;
+robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA_MM,185)
 
 initial_angle=0
 
@@ -58,6 +59,47 @@ def drop_ontop():
     print("3")
     
     drop()
+
+# =========================================
+# Retrocede el robot para alinearse
+def initialAlign():
+    time = 1000;
+    robot.drive(speed=-100, turn_rate=0)
+    wait(time)
+    robot.stop()
+
+# =========================================
+# Funcion para girar (no probada aun)
+def rotateInPlace(angle):
+    robot.turn(angle, Stop.hold, True);
+
+# =========================================
+# Funcion para avanzar cierta cantidad de cm
+def moveForward(cm):
+    # Me dicen que los motores estan invertidos asi que:
+    robot.straight(cm * 10, Stop.hold, True);
+    # Multiplicado por 10 pq la funcion agarra mm
+
+# =========================================
+# Segunda funcion de movimiento recto
+def moveForward2(cm):
+    # La logica de aca es que el robot avance cierta cantidad de cm
+    # basado en la cantidad de revoluciones que tiene que hacer
+
+    # Calculamos la cantidad de revoluciones que tiene que hacer
+    # Una revolución es 360 grados y mueve una cantidad de diametro * pi
+    # Entonces hacemos la regla de 3:
+    revolutions = (360 * cm) / ((DIAMETRO_RUEDA_MM / 10) * math.PI) # Como el diametro esta en mm lo dividimos entre 10
+
+    green_motor.reset_angle(0);
+    blue_motor.reset_angle(0);
+
+    green_motor.run_angle(100, revolutions, Stop.hold, True);
+    blue_motor.run_angle(100, revolutions, Stop.hold, True);
+
+    print("Angulos de los motores: ", green_motor.angle(), ", ", blue_motor.angle());
+
+# =========================================
 
 def drop():
     claw_motor.run_angle(speed=-100, rotation_angle=-100, wait=True)
@@ -238,6 +280,7 @@ def moviemiento_recto(motor_b, motor_c, distancia):
  
 
 def first_phase():
+   initialAlign() # Retrocede el robot para alinearse
    initialize_claw()
    moviemiento_recto(motor_b=green_motor,motor_c=blue_motor,distancia=17.8)
    girar_90_grados(radio_robot=16.9,radio_rueda=6.88,right_motor=blue_motor,left_motor=green_motor,cuarto_de_circunferencia=4,velocidad=100)
