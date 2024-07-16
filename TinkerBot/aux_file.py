@@ -38,3 +38,25 @@ def girar_90_grados(radio_robot, radio_rueda, right_motor, left_motor,cuarto_de_
     # Inicializa los motores para el giro
     right_motor.run_angle(velocidad, grados_giro_motor, wait=False)
     left_motor.run_angle(-velocidad, grados_giro_motor, wait=True)  # Gira en la dirección opuesta
+
+
+# 1 es derecho 2 es izquierdo
+
+#def PID():
+#    target_path = 45
+#    Kp = 0.5
+ #   speed = 50
+#
+ #   while True:
+  #      if  (LineSensor_right < target_path) or (LineSensor_left > target_path):
+   #          var1 = Kp*(LineSensor_right.reflection()-target_path)
+    #         blue_motor.run(SpeedPercent(var1))
+     ##
+      #  if  (LineSensor_left < target_path) or (LineSensor_right > target_path):
+       #      var2 = Kp*(LineSensor_left.reflection()-target_path)
+        #     blue_motor.run(SpeedPercent(20))
+         #    green_motor.run(SpeedPercent(var2))
+#
+  #      else:
+ #            print()
+   #          robot.drive(SpeedPercent(20))
