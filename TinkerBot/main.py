@@ -15,7 +15,7 @@ green_motor = Motor(Port.C)
 motor_c = green_motor
 blue_motor = Motor(Port.D)
 motor_b = blue_motor
-crane_motor = Motor(Port.B)
+grua_motor = Motor(Port.B)
 claw_motor = Motor(Port.A)
 
 # c Y d > RUEDAS
@@ -24,13 +24,21 @@ claw_motor = Motor(Port.A)
 # B > GRUA
 # a | CLAW
 
+LAST_CLAW_ANGLE = 0
+RADIO_ENGRANAJE_MAYOR = 5
 DIAMETRO_RUEDA_MM = 56
+
 robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA_MM,185)
 
 initial_angle=0
 
 #########
 #funciones'
+
+#=================
+def grab():
+    print()
+    #deberia de haber codigo aqui
 
 # =========================================
 # Retrocede el robot para alinearse
@@ -103,6 +111,54 @@ def movimiento_recto(motor_b, motor_c, distancia):
     motor_c.stop()
  
 # =========================================
+
+def drop():
+    claw_motor.run_angle(speed=-100, rotation_angle=-100, wait=True)
+    grua_motor.stalled()
+
+def cerrar_hasta_top():
+    LAST_CLAW_ANGLE = claw_motor.run_until_stalled(-200, then=Stop.HOLD, duty_limit=40)
+    print(LAST_CLAW_ANGLE)
+
+def cerrar_garra():
+    claw_motor.run_target(speed=200, target_angle=-360,wait=False)
+    wait(2000)
+
+def abrir_garra():
+    claw_motor.run_target(speed=200, target_angle=LAST_CLAW_ANGLE,wait=True)
+
+def abrir_garra_init():
+    claw_motor.run_target(speed=200, target_angle=180,wait=True)
+
+def bajar_garra():
+    grua_motor.run_angle(speed=200,rotation_angle=-360)
+
+def subir_garra():
+    grua_motor.run_angle(speed=200,rotation_angle=360)
+
+def initialize_claw():
+    cerrar_garra()
+    abrir_garra_init()
+    #deberia de haber codigo aqui
+
+def first_phase():
+
+   initialize_claw()
+
+   cerrar_hasta_top()
+   abrir_garra()
+   #subir_garra()
+   #abrir_garra()
+   wait(2000)
+   # subirUnBloque()
+   #movimiento_recto(motor_b=blue_motor,motor_c=green_motor,distancia=30)
+
+    
+def subirUnBloque():
+    grua_motor.run_angle(speed=200,rotation_angle=245)
+
+
+# =========================================
 def test_phase():
     moveForward(10)
 
@@ -114,7 +170,7 @@ def avanzar(distancia_cm, velocidad):
     robot.stop()
 
 #try:
-movimiento_recto(blue_motor, green_motor, 100)
+first_phase()
 #movimiento_recto(blue_motor, green_motor, 200)
 ev3.speaker.beep(4)
 print("FUNCIONA")
