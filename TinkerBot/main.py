@@ -7,6 +7,7 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from math import pi
+from aux_file import girar_90_grados,movimiento_recto
 
 ev3 = EV3Brick()
 
@@ -80,72 +81,49 @@ def moveForward2(cm):
     print("Angulos de los motores: ", green_motor.angle(), ", ", blue_motor.angle())
 
 # =========================================
+def avanzar(distancia_cm, velocidad):
 
-def movimiento_recto(motor_b, motor_c, distancia):
+    tiempo_ms = abs((distancia_cm / velocidad) * 1000)
+    robot.drive(velocidad, 0)
+    wait(tiempo_ms)
+    robot.stop()
 
-    desired = 0
-    motor_b.reset_angle(0)
-    motor_c.reset_angle(0)
-    kinteger = 0.001
-    kproportional = 0.3
-    kderivate = 0.2
-    target_angle = ( distancia / (21.6) ) *360
-    print(target_angle)
-    integral = 0
-    speed = 100
-    while motor_b.angle() < target_angle:
-        print(motor_b.angle(), motor_c.angle())
-        actual = abs(motor_b.angle()) - abs(motor_c.angle())
-
-        error = desired - actual
-        integral = integral + error
-        derivative = error - actual
-        correcion = (error*kproportional) + (integral*kinteger) + (derivative*kderivate)
-
-        motor_b.run(speed + correcion) 
-        motor_c.run(speed - correcion)
-
-        if speed < 150: 
-           speed += 10
-    motor_b.stop()
-    motor_c.stop()
- 
 # =========================================
 
 def drop():
     claw_motor.run_angle(speed=-100, rotation_angle=-100, wait=True)
     grua_motor.stalled()
-
+# =========================================
 def cerrar_hasta_top():
    #djfndnf
    print("banana con quevedo")
-
+# =========================================
 def cerrar_garra():
     claw_motor.run_target(speed=200, target_angle=-360,wait=False)
     wait(2000)
-
+# =========================================
 def abrir_garra():
     claw_motor.run_target(speed=200, target_angle=LAST_CLAW_ANGLE,wait=True)
 
 #pueden usar run_until_stall para resetear el mecanismo de ascensor 
-
+# =========================================
 def bajar_garra():
     grua_motor.run_angle(speed=200,rotation_angle=-360)
-
+# =========================================
 def subir_garra():
     grua_motor.run_angle(speed=200,rotation_angle=360)
-
+# =========================================
 def initialize_claw():
     LAST_CLAW_ANGLE = claw_motor.run_until_stalled(-200, then=Stop.HOLD, duty_limit=40)
     print("LAST_CLAW_ANGLE: ",LAST_CLAW_ANGLE)
-
+# =========================================
 def first_phase():
 
    initialize_claw()
    claw_motor.run(-200)
    subir_garra()
    grua_motor.run_until_stalled(speed=100)
-   grua_motor.run_angle(speed=200,rotation_angle=-350)
+   grua_motor.run_angle(speed=200,rotation_angle=350)
    print("si paso")
    claw_motor.stop()
    abrir_garra()
@@ -157,24 +135,20 @@ def first_phase():
    # subirUnBloque()
    #movimiento_recto(motor_b=blue_motor,motor_c=green_motor,distancia=30)
 
-    
+# =========================================    
 def subirUnBloque():
     grua_motor.run_angle(speed=200,rotation_angle=245)
 
 
 # =========================================
 def test_phase():
-    moveForward(10)
-
-def avanzar(distancia_cm, velocidad):
-
-    tiempo_ms = abs((distancia_cm / velocidad) * 1000)
-    robot.drive(velocidad, 0)
-    wait(tiempo_ms)
-    robot.stop()
+    movimiento_recto(motor_b=motor_b,motor_c=motor_c, distancia=27)
 
 
-first_phase()
+# =========================================
+
+
+test_phase()
 
 ev3.speaker.beep(4)
 print("FUNCIONA")
