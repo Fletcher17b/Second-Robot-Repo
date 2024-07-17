@@ -117,8 +117,8 @@ def drop():
     grua_motor.stalled()
 
 def cerrar_hasta_top():
-    LAST_CLAW_ANGLE = claw_motor.run_until_stalled(-200, then=Stop.HOLD, duty_limit=40)
-    print(LAST_CLAW_ANGLE)
+   #djfndnf
+   print("banana con quevedo")
 
 def cerrar_garra():
     claw_motor.run_target(speed=200, target_angle=-360,wait=False)
@@ -127,8 +127,7 @@ def cerrar_garra():
 def abrir_garra():
     claw_motor.run_target(speed=200, target_angle=LAST_CLAW_ANGLE,wait=True)
 
-def abrir_garra_init():
-    claw_motor.run_target(speed=200, target_angle=180,wait=True)
+#pueden usar run_until_stall para resetear el mecanismo de ascensor 
 
 def bajar_garra():
     grua_motor.run_angle(speed=200,rotation_angle=-360)
@@ -137,18 +136,23 @@ def subir_garra():
     grua_motor.run_angle(speed=200,rotation_angle=360)
 
 def initialize_claw():
-    cerrar_garra()
-    abrir_garra_init()
-    #deberia de haber codigo aqui
+    LAST_CLAW_ANGLE = claw_motor.run_until_stalled(-200, then=Stop.HOLD, duty_limit=40)
+    print("LAST_CLAW_ANGLE: ",LAST_CLAW_ANGLE)
 
 def first_phase():
 
    initialize_claw()
-
-   cerrar_hasta_top()
+   claw_motor.run(-200)
+   subir_garra()
+   grua_motor.run_until_stalled(speed=100)
+   grua_motor.run_angle(speed=200,rotation_angle=-350)
+   print("si paso")
+   claw_motor.stop()
    abrir_garra()
-   #subir_garra()
-   #abrir_garra()
+   #bajar_garra()
+   
+
+
    wait(2000)
    # subirUnBloque()
    #movimiento_recto(motor_b=blue_motor,motor_c=green_motor,distancia=30)
@@ -169,10 +173,8 @@ def avanzar(distancia_cm, velocidad):
     wait(tiempo_ms)
     robot.stop()
 
-#try:
+
 first_phase()
-#movimiento_recto(blue_motor, green_motor, 200)
+
 ev3.speaker.beep(4)
 print("FUNCIONA")
-#except:
-#    print("no")
