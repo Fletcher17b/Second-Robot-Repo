@@ -36,6 +36,7 @@ def girar_90_grados(radio_robot, radio_rueda, right_motor, left_motor,cuarto_de_
     # Inicializa los motores para el giro
     right_motor.run_angle(velocidad, grados_giro_motor, wait=False)
     left_motor.run_angle(-velocidad, grados_giro_motor, wait=True)  # Gira en la dirección opuesta
+# =========================================
 
 def movimiento_recto(motor_b, motor_c, distancia):
 
