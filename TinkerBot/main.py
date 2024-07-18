@@ -31,7 +31,9 @@ LAST_CLAW_ANGLE = 0
 RADIO_ENGRANAJE_MAYOR = 5
 DIAMETRO_RUEDA_MM = 56
 
-robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA_MM,185)
+#axle-width conocido como envergadura
+#original 185, con lo que mas gira preciso 214, 29mm offset de lo que deberia
+robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA_MM,214)
 
 initial_angle=0
 
@@ -310,16 +312,36 @@ def moverElevadorGrua(direccion, cantidad):
         return
 
 # =========================================
+# Función de Andrés también en test-phase, veáse girarEnRadianes.py
+
+def girarEnRadianes(angle):
+    # https://docs.pybricks.com/en/stable/robotics.html#measuring en caso que no gire bien :(
+
+
+    controlGirar = True
+    if controlGirar == True:
+        robot.turn(angle)
+
+
+
+        #If your robot turns not far enough, increase the axle_track value slightly.
+        #robot = DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
+
+        #If your robot turns too far, decrease the axle_track value slightly.
+
+
+    return
+# =========================================
 
 # =========================================
 def test_phase():
-    girar_90_grados(9, (DIAMETRO_RUEDA_MM/2)/10, green_motor, blue_motor, 4)
+    #girar_90_grados(9, (DIAMETRO_RUEDA_MM/2)/10, green_motor, blue_motor, 4)
     #cerrar_hasta_top()
     #cerrar_garra()
     #moverElevadorGrua(True, BLOQUE_ALTURA)
     #abrir_garra()
     #moverElevadorGrua(False, BLOQUE_ALTURA)
-    girar_90_grados(9, (DIAMETRO_RUEDA_MM/2)/10, green_motor, blue_motor, 4)
+    #girar_90_grados(9, (DIAMETRO_RUEDA_MM/2)/10, green_motor, blue_motor, 4)
     #cerrar_hasta_top()
     #cerrar_garra()
     #moverElevadorGrua(True, BLOQUE_ALTURA)
@@ -327,8 +349,12 @@ def test_phase():
     #moverElevadorGrua(False, BLOQUE_ALTURA)
     #movimiento_recto(motor_b=motor_b,motor_c=motor_c, distancia=27)
     # girar_90_grados(radio_robot=7.35,radio_rueda=2.16,right_motor=green_motor,left_motor=blue_motor,cuarto_de_circunferencia=4,velocidad=100)
-    angle_radians = 1/4*pi
-    girarEnRadianes(angle_radians)
+
+    angle_radians = 1/2*pi
+    angle = degrees(angle_radians)
+    for i in range(16):
+        girarEnRadianes(angle)
+
 
 
 
@@ -336,22 +362,8 @@ def test_phase():
 # =========================================
 # Función de Andrés también en test-phase, veáse girarEnRadianes.py
 
-def girarEnRadianes(angle_radians):
-    # robot = DriveBase(green_motor,blue_motor,68.8,185)
-    # robot = class DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
-    # https://docs.pybricks.com/en/stable/robotics.html#measuring en caso que no gire bien :(
 
-    controlGirar = True
-
-    angle = degrees(angle_radians)
-
-    if controlGirar == True:
-        robot.turn(angle, Stop.HOLD, wait=True)
-
-
-
-
-first_phase()
+test_phase()
 
 ev3.speaker.beep(4)
 print("FUNCIONA")
