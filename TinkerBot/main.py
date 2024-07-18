@@ -6,7 +6,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-from math import pi
+from math import pi, degrees
 from aux_file import girar_90_grados,movimiento_recto
 
 ev3 = EV3Brick()
@@ -146,10 +146,29 @@ def subirUnBloque():
 # =========================================
 def test_phase():
     #movimiento_recto(motor_b=motor_b,motor_c=motor_c, distancia=27)
-    girar_90_grados(radio_robot=7.35,radio_rueda=2.16,right_motor=green_motor,left_motor=blue_motor,cuarto_de_circunferencia=4,velocidad=100)
+    # girar_90_grados(radio_robot=7.35,radio_rueda=2.16,right_motor=green_motor,left_motor=blue_motor,cuarto_de_circunferencia=4,velocidad=100)
+    angle_radians = 1/4*pi
+    girarEnRadianes(angle_radians)
+
+
 
 
 # =========================================
+# Función de Andrés también en test-phase, veáse girarEnRadianes.py
+
+def girarEnRadianes(angle_radians):
+    # robot = DriveBase(green_motor,blue_motor,68.8,185)
+    # robot = class DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
+    # https://docs.pybricks.com/en/stable/robotics.html#measuring en caso que no gire bien :(
+
+    controlGirar = True
+
+    angle = degrees(angle_radians)
+
+    if controlGirar == True:
+        robot.turn(angle, Stop.HOLD, wait=True)
+
+
 
 
 first_phase()
