@@ -10,6 +10,8 @@ from math import pi, degrees
 from aux_file import girar_90_grados,movimiento_recto
 from subirBajar import moverElevadorGrua
 from subirBajar import moverElevadorGrua
+import tmp
+import trayecto
 
 ev3 = EV3Brick()
 
@@ -350,20 +352,34 @@ def test_phase():
     #movimiento_recto(motor_b=motor_b,motor_c=motor_c, distancia=27)
     # girar_90_grados(radio_robot=7.35,radio_rueda=2.16,right_motor=green_motor,left_motor=blue_motor,cuarto_de_circunferencia=4,velocidad=100)
 
+
+
+    moverElevadorGrua(True,120)
+
     angle_radians = 1/2*pi
     angle = degrees(angle_radians)
     for i in range(16):
         girarEnRadianes(angle)
 
 
-
+def test_phase2():
+    cerrar_garra()
+    wait(5000)
+    subir_garra_cantidad(250)
+    movimiento_recto(motor_b=motor_b,motor_c=motor_c,distancia=6.2)
+    bajar_garra_cantidad(50)
+    wait(500)
+    abrir_garra()
+    bajar_garra_cantidad(200)
+    
+    
 
 
 # =========================================
 # Función de Andrés también en test-phase, veáse girarEnRadianes.py
 
 
-test_phase()
+test_phase2()
 
 ev3.speaker.beep(4)
 print("FUNCIONA")
