@@ -9,17 +9,31 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 
 ev3 = EV3Brick()
 
-
-
 green_motor = Motor(Port.A)
 blue_motor = Motor(Port.D)
 crane_motor = Motor(Port.B)
 claw_motor = Motor(Port.C)
 
-# while True:
-#     print("Left: ", LineSensor_left.color())
-#     print("Right: ", LineSensor_right.color())
-#     wait(1000)
+sensor1 = ColorSensor(Port.S1)
+sensor2 = ColorSensor(Port.S2)
+
+def seguidorDeLineas():
+    green_motor.run(25)
+    blue_motor.run(25)
+
+    kp = 0.5
+    target_path = 45
+
+    while True:
+        if (sensor1.reflection() < target_path) or (sensor2.reflection() > target_path):
+            green_motor.run(kp * (sensor1.reflection() - target_path))
+            blue_motor.run(20)
+        if (sensor2.reflection() < target_path) or (sensor1.reflection() > target_path):
+            green_motor.run(20)
+            blue_motor.run(kp * (sensor2.reflection() - target_path))
+        else:
+            green_motor.run(20)
+            blue_motor.run(20)
 
 # crane_motor.run_until_stalled(-100, then=Stop.HOLD, duty_limit=100)
 # crane_motor.reset_angle(0)
@@ -29,8 +43,3 @@ claw_motor.run_until_stalled(-30, then=Stop.HOLD, duty_limit=40)
 crane_motor.run(-50)
 wait(500)
 crane_motor.stop()
-# claw_motor.run_until_stalled(30)
-# crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=70)
-# wait(1000)
-# claw_motor.run_until_stalled(-30, then=Stop.HOLD, duty_limit=40)
-
