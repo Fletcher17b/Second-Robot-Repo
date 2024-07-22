@@ -34,12 +34,3 @@ def seguidorDeLineas():
         else:
             green_motor.run(20)
             blue_motor.run(20)
-
-# crane_motor.run_until_stalled(-100, then=Stop.HOLD, duty_limit=100)
-# crane_motor.reset_angle(0)
-# crane_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=40)
-claw_motor.run_until_stalled(100, then=Stop.HOLD, duty_limit=40)
-claw_motor.run_until_stalled(-30, then=Stop.HOLD, duty_limit=40)
-crane_motor.run(-50)
-wait(500)
-crane_motor.stop()
