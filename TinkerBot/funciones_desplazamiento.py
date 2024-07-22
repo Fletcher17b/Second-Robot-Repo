@@ -20,6 +20,9 @@ claw_motor = Motor(Port.A)
 
 robot = DriveBase(green_motor,blue_motor,68.8,185)
 
+RADIO_ENGRANAJE_MAYOR = 5
+DIAMETRO_RUEDA_MM = 56
+
 
 def girar_90_grados(radio_robot, radio_rueda, right_motor, left_motor,cuarto_de_circunferencia, velocidad = 100):
     right_motor.reset_angle(0)
@@ -68,3 +71,53 @@ def movimiento_recto(motor_b, motor_c, distancia):
     motor_b.stop()
     motor_c.stop()
  
+
+
+# =========================================
+# Retrocede el robot para alinearse
+def initialAlign():
+    time = 1000
+    robot.drive(speed=-100, turn_rate=0)
+    wait(time)
+    robot.stop()
+
+# =========================================
+# Funcion para girar (no probada aun)
+def rotateInPlace(angle):
+    robot.turn(angle, Stop.hold, True)
+
+# =========================================
+# Funcion para avanzar cierta cantidad de cm
+def moveForward(cm):
+    # Me dicen que los motores estan invertidos asi que:
+    robot.straight(cm * 10)
+    # Multiplicado por 10 pq la funcion agarra mm
+
+# =========================================
+# Segunda funcion de movimiento recto
+def moveForward2(cm):
+    # La logica de aca es que el robot avance cierta cantidad de cm
+    # basado en la cantidad de revoluciones que tiene que hacer
+
+    # Calculamos la cantidad de revoluciones que tiene que hacer
+    # Una revolución es 360 grados y mueve una cantidad de diametro * pi
+    # Entonces hacemos la regla de 3:
+    revolutions = (360 * cm) / ((DIAMETRO_RUEDA_MM / 10) * pi) # Como el diametro esta en mm lo dividimos entre 10
+
+    green_motor.reset_angle(0)
+    blue_motor.reset_angle(0)
+
+    green_motor.run_angle(100, revolutions, Stop.HOLD, False)
+    blue_motor.run_angle(100, revolutions, Stop.HOLD, True)
+
+    print("Angulos de los motores: ", green_motor.angle(), ", ", blue_motor.angle())
+
+# =========================================
+def avanzar(distancia_cm, velocidad):
+
+    tiempo_ms = abs((distancia_cm / velocidad) * 1000)
+    robot.drive(velocidad, 0)
+    wait(tiempo_ms)
+    robot.stop()
+
+# =========================================
