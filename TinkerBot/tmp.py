@@ -16,10 +16,6 @@ blue_motor = Motor(Port.D)
 crane_motor = Motor(Port.B)
 claw_motor = Motor(Port.C)
 
-gyro_sensor = GyroSensor(Port.S2)
-LineSensor_left = ColorSensor(Port.S1)
-LineSensor_right = ColorSensor(Port.S4)
-
 # while True:
 #     print("Left: ", LineSensor_left.color())
 #     print("Right: ", LineSensor_right.color())
