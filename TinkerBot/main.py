@@ -47,6 +47,7 @@ def grab():
     print()
     #deberia de haber codigo aqui
 
+
 # =========================================
 # Retrocede el robot para alinearse
 def initialAlign():
