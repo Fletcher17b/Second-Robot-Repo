@@ -1,31 +1,35 @@
+# =============================================================================
+# LIBRERIAS BOILERPLATE
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                 InfraredSensor, UltrasonicSensor, GyroSensor)
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+# =============================================================================
 
 #estas dos variabls globales deben ser ajustadas individualmente,
 #en el contexto de alguan variable,
 
-# incrementar DIAMETRO_RUEDA si el robot avanza demasiado
+# increAmentar DIAMETRO_RUEDA si el robot avanza demasiado
 # decrecer DIAMETRO_RUEDA si el robot no avanza lo suficiente
 
 # incrementar ENVERGADURA si el robot no gira lo suficiente
 # decrecer ENVERGADURA si el robot gira demasiado
 
-
 DIAMETRO_RUEDA=56
 ENVERGADURA=214
 
-green_motor=Motor(Port.C)
-blue_motor=Motor(Port.D)
-
-robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA,ENVERGADURA)
-
+import definitions as df
 
 def movimientoRecto(distance):
-    robot.straight(distance)
-    robot.stop()
+    df.robot.straight(distance)
+    df.robot.stop()
     return
 
 def girar(angle):
-    robot.turn(angle)
-    robot.stop()
+    df.robot.turn(angle)
+    df.robot.stop()
     return
 
 

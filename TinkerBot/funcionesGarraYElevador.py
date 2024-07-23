@@ -1,6 +1,6 @@
-########################
-# Grua definiciones #
-########################
+#########################
+#   Grua definiciones   #
+#########################
 
 engranajes_grua = [[20,12],[20,12]]
 perfil_tolerancia_grua = 11
@@ -72,13 +72,12 @@ def moverElevadorGrua(direccion, cantidad):
             # entonces se sube lo posible ajustando movimiento_procesado
             movimiento_procesado = GRUA_MAXIMO - MOVIMIENTO_TOTAL
         
-        #prints para debug
-        print ("moverElevadorGrua(): No se puede subir la cantidad de " + str(cantidad))
-        print("moverElevadorGrua(): Se subira la cantidad de " + str(movimiento_procesado))
-
-    else:
-        # se puede, simple
-        movimiento_procesado = cantidad
+            #prints para debug
+            print ("moverElevadorGrua(): No se puede subir la cantidad de " + str(cantidad))
+            print("moverElevadorGrua(): Se subira la cantidad de " + str(movimiento_procesado))
+        else:
+            # se puede, simple
+            movimiento_procesado = cantidad
 
         # se sube dicho movimiento_procesado, y se va conteando al MOVIMIENTO_TOTAL
         subirGarra(movimiento_procesado)
@@ -105,6 +104,6 @@ def moverElevadorGrua(direccion, cantidad):
             bajarGarra(movimiento_procesado)
             MOVIMIENTO_TOTAL -= movimiento_procesado
 
-            return
+        return
     
 
