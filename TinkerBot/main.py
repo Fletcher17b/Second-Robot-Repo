@@ -41,6 +41,6 @@ df.robot.reset()
 
 #aqui iria un cerrar
 
-fd.girar(92)
+fd.girar(90)
 
-fd.movimientoRecto(400)
+fd.movimientoRecto(420)

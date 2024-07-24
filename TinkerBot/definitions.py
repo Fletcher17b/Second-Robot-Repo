@@ -27,7 +27,7 @@ claw_motor = Motor(Port.A)
 # a | CLAW
 
 DIAMETRO_RUEDA_MM = 43.2
-ENVERGADURA = 165
+ENVERGADURA = 167
 
 #axle-width conocido como envergadura
 #original 185, con lo que mas gira preciso 214, 29mm offset de lo que deberia
