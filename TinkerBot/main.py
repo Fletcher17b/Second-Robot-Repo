@@ -28,11 +28,16 @@ fd.movimientoRecto(-200)
 
 ge.abrir_garra()
 
-fd.movimientoRecto(325)
+fd.movimientoRecto(335)
 
 ge.cerrar_hasta_top()
 
-wait(2000)
+ge.moverElevadorGrua(True,90)
+
+fd.movimientoRecto(125)
+
+df.ev3.speaker.beep()
+wait(500)
 df.robot.stop()
 e1.reset_angle(0)
 e2.reset_angle(0)
@@ -41,6 +46,35 @@ df.robot.reset()
 
 #aqui iria un cerrar
 
-fd.girar(90)
+fd.girar(91)
 
 fd.movimientoRecto(420)
+
+df.ev3.speaker.beep()
+wait(500)
+ge.moverElevadorGrua(True,240)
+fd.girar(-30)
+
+fd.girar(30)
+
+df.ev3.speaker.beep()
+wait(500)
+fd.movimientoRecto(-10)
+
+fd.girar(86)
+
+wait(200)
+fd.movimientoRecto(90)
+
+ge.moverElevadorGrua(False,180)
+ge.abrir_garra()
+
+wait(500)
+ge.moverElevadorGrua(False,140)
+fd.movimientoRecto(10)
+ge.moverElevadorGrua(True,70)
+ge.cerrar_hasta_top()
+
+ge.moverElevadorGrua(True,90)
+fd.girar(90)
+fd.movimientoRecto(1000)

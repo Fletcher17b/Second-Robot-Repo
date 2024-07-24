@@ -116,9 +116,9 @@ def moverElevadorGrua(direccion, cantidad):
             # si se puede, entonces simple
             movimiento_procesado = cantidad
 
-            # se baja dicho movimiento_procesado, y se va conteando al MOVIMIENTO_TOTAL
-            bajarGarra(movimiento_procesado)
-            MOVIMIENTO_TOTAL -= movimiento_procesado
+        # se baja dicho movimiento_procesado, y se va conteando al MOVIMIENTO_TOTAL
+        bajarGarra(movimiento_procesado)
+        MOVIMIENTO_TOTAL -= movimiento_procesado
 
         return
     
