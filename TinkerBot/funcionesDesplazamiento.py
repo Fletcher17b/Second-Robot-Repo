@@ -24,8 +24,9 @@ import definitions as df
 
 def movimientoRecto(distance):
     df.robot.straight(distance)
-    df.robot.stop()
     return
+
+
 
 def girar(angle):
     df.robot.turn(angle)

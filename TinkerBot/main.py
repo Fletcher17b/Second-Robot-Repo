@@ -1,45 +1,58 @@
-# =============================================================================
-# LIBRERIAS BOILERPLATE
-from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
-                                 InfraredSensor, UltrasonicSensor, GyroSensor)
-from pybricks.parameters import Port, Stop, Direction, Button, Color
-from pybricks.tools import wait, StopWatch, DataLog
-from pybricks.robotics import DriveBase
-# =============================================================================
+#!/usr/bin/env pybricks-micropython
 
-from math import pi, degrees
+from pybricks.ev3devices import Motor
+from pybricks.parameters import Port    
 
-ev3 = EV3Brick()
+#Esto no fue posible de modularizar, por lo que se tuvo que hacer en el main
+#Sin embargo, el hecho de que las funciones no se puedan modularizar, hace que entonces
+#sea más claro cuando hay reset.angle o reset
+e1 = Motor(Port.C)
+e2 = Motor(Port.D)
 
-green_motor = Motor(Port.C)
-motor_c = green_motor
-blue_motor = Motor(Port.D)
-motor_b = blue_motor
-grua_motor = Motor(Port.B)
-claw_motor = Motor(Port.A)
 
-# c Y d > RUEDAS
-# C > Green
-# D > Blue
-# B > GRUA
-# a | CLAW
-
-DIAMETRO_RUEDA_MM = 56
-
-#axle-width conocido como envergadura
-#original 185, con lo que mas gira preciso 214, 29mm offset de lo que deberia
-robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA_MM,214)
-
-def movimientoRecto(distance):
-    robot.straight(distance)
-    robot.stop()
-    return
+import funcionesDesplazamiento as fd
+import funcionesGarraYElevador as ge
+import definitions as df
 
 # Description: Trayectoria de TinkerBot
 
-#para atras acomodarse 1
-movimientoRecto(-70)
+#para atras acomodarse 1 
+
+fd.movimientoRecto(-200)
+
+#df.robot.reset()
 
 #para adelante acomodarse 1
-movimientoRecto(285)
+fd.movimientoRecto(235)
+
+df.robot.stop()
+
+e1.reset_angle(0)
+e2.reset_angle(0)
+
+df.robot.reset()
+
+fd.girar(90)
+
+ge.abrir_garra()
+
+fd.movimientoRecto(270)
+
+ge.cerrar_garra()
+ge.cerrar_garra()
+
+fd.movimientoRecto(245)
+
+fd.girar(15)
+
+fd.movimientoRecto(15)
+
+ge.moverElevadorGrua(True,360)
+
+ge.abrir_garra()
+fd.girar(-20)
+
+df.wait(200)
+
+fd.girar(20)
+ge.moverElevadorGrua(False,360)

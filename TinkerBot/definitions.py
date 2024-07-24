@@ -1,3 +1,4 @@
+#!/usr/bin/env pybricks-micropython
 # =============================================================================
 # LIBRERIAS BOILERPLATE
 from pybricks.hubs import EV3Brick
@@ -25,8 +26,9 @@ claw_motor = Motor(Port.A)
 # B > GRUA
 # a | CLAW
 
-DIAMETRO_RUEDA_MM = 56
+DIAMETRO_RUEDA_MM = 43.2
+ENVERGADURA = 165
 
 #axle-width conocido como envergadura
 #original 185, con lo que mas gira preciso 214, 29mm offset de lo que deberia
-robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA_MM,214)
+robot = DriveBase(green_motor,blue_motor,DIAMETRO_RUEDA_MM,ENVERGADURA)

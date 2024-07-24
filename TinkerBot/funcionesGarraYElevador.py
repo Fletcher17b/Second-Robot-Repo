@@ -1,3 +1,17 @@
+#!/usr/bin/env pybricks-micropython
+# =============================================================================
+# LIBRERIAS BOILERPLATE
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                 InfraredSensor, UltrasonicSensor, GyroSensor)
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+#usar un cvs para anotar las cosas??? DataLog?
+from pybricks.robotics import DriveBase
+# =============================================================================
+
+import definitions as df
+
 #########################
 #   Grua definiciones   #
 #########################
@@ -7,7 +21,8 @@ perfil_tolerancia_grua = 11
 direccion = Direction.CLOCKWISE
 reiniciar_angulo = False
 
-grua_motor = Motor(Port.B,direccion,engranajes_grua,reiniciar_angulo,perfil_tolerancia_grua)
+#grua_motor = Motor(Port.B,direccion,engranajes_grua,reiniciar_angulo,perfil_tolerancia_grua)
+grua_motor = Motor(Port.B)
 
 MOVIMIENTO_TOTAL = 0
 GRUA_MAXIMO = 360
@@ -34,8 +49,8 @@ engranajes_garra = [8,40]
 #el engranaje chiquitito de 8 esta conectado directo al motor, le pasa la fuerza al de 40,
 #que le pasa con un eje de 90 a los dos de 16 que abren/cierran la garra
 
-claw_motor = Motor(Port.A,direccion,engranajes_garra,reiniciar_angulo,perfil_tolerancia_garra)
-
+#claw_motor = Motor(Port.A,direccion,engranajes_garra,reiniciar_angulo,perfil_tolerancia_garra)
+claw_motor = Motor(Port.A)
 
 #############################################
 # funciones de garra y elevador #
@@ -66,7 +81,7 @@ def moverElevadorGrua(direccion, cantidad):
 
     
     # si subir, y aun no alcanza el maximo lo solicitado a subir:
-    if direccion == Direction.CLOCKWISE:
+    if direccion == True:
         # y si ya sobrepaso el maximo posible para subir
         if MOVIMIENTO_TOTAL + cantidad > GRUA_MAXIMO:
             # entonces se sube lo posible ajustando movimiento_procesado
@@ -107,3 +122,42 @@ def moverElevadorGrua(direccion, cantidad):
         return
     
 
+# =========================================
+
+def drop():
+    claw_motor.run_angle(speed=-100, rotation_angle=-100, wait=True)
+    grua_motor.stalled()
+# =========================================
+
+def cerrar_hasta_top():
+   claw_motor.run_until_stalled(speed=-100)
+   print("cerrar_hasta_top(): Se ha llegado al duty limit")
+   print("banana con quevedo")
+# =========================================
+def cerrar_garra():
+    claw_motor.run(speed=-100)
+    wait(500)
+# =========================================
+def abrir_garra():
+    claw_motor.stop()
+    claw_motor.run_target(speed=200, target_angle=180,wait=True)
+    claw_motor.run_target(speed=200, target_angle=180,wait=True)
+
+#pueden usar run_until_stall para resetear el mecanismo de ascensor 
+# =========================================
+def bajar_garra():
+    #grua_motor.run_angle(speed=200,rotation_angle=-360)
+    grua_motor.run_until_stalled(speed=-100, duty_limit=50)
+# =========================================
+def subir_garra():
+    #grua_motor.run_angle(speed=200,rotation_angle=360)
+    grua_motor.run_until_stalled(speed=100)
+# =========================================
+def initialize_claw():
+    LAST_CLAW_ANGLE = claw_motor.run_until_stalled(-200, then=Stop.HOLD, duty_limit=40)
+    print("LAST_CLAW_ANGLE: ",LAST_CLAW_ANGLE)
+    abrir_garra()
+    abrir_garra()
+
+def subirUnBloque():
+    grua_motor.run_angle(speed=200,rotation_angle=245)
