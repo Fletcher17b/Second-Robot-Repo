@@ -51,7 +51,7 @@ engranajes_garra = [8,40]
 #que le pasa con un eje de 90 a los dos de 16 que abren/cierran la garra
 
 #completé la definición
-claw_motor = Motor(Port.A,direccion,engranajes_garra,reiniciar_angulo,perfil_tolerancia_garra)
+claw_motor = Motor(Port.A,Direction.CLOCKWISE,gears=engranajes_garra)
 
 #############################################
 # funciones de garra y elevador #
@@ -131,7 +131,7 @@ def drop():
 # =========================================
 
 def cerrar_hasta_top():
-   claw_motor.run_until_stalled(speed=-100)
+   claw_motor.run_until_stalled(speed=-100,duty_limit=40)
    print("cerrar_hasta_top(): Se ha llegado al duty limit")
    print("banana con quevedo")
 # =========================================
@@ -141,7 +141,7 @@ def cerrar_garra():
 # =========================================
 def abrir_garra():
     #habian dos run targets, y wait era True
-    claw_motor.run_target(speed=200, target_angle=180,wait=False)
+    claw_motor.run_target(speed=200, target_angle=0,wait=False)
 
 #pueden usar run_until_stall para resetear el mecanismo de ascensor 
 # =========================================
