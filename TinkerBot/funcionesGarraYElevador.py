@@ -17,11 +17,12 @@ import definitions as df
 #########################
 
 engranajes_grua = [[20,12],[20,12]]
-perfil_tolerancia_grua = 11
+perfi_tolerancia_grua = 11
 direccion = Direction.CLOCKWISE
-reiniciar_angulo = False
+reiniciar_angulo = True
 
 #grua_motor = Motor(Port.B,direccion,engranajes_grua,reiniciar_angulo,perfil_tolerancia_grua)
+#grua_motor = Motor(Port.B,positive_direction=Direction.CLOCKWISE,gears=[[20,12],[20,12]],reset_angle=True,profile=11)
 grua_motor = Motor(Port.B)
 
 MOVIMIENTO_TOTAL = 0
@@ -49,8 +50,8 @@ engranajes_garra = [8,40]
 #el engranaje chiquitito de 8 esta conectado directo al motor, le pasa la fuerza al de 40,
 #que le pasa con un eje de 90 a los dos de 16 que abren/cierran la garra
 
-#claw_motor = Motor(Port.A,direccion,engranajes_garra,reiniciar_angulo,perfil_tolerancia_garra)
-claw_motor = Motor(Port.A)
+#completé la definición
+claw_motor = Motor(Port.A,direccion,engranajes_garra,reiniciar_angulo,perfil_tolerancia_garra)
 
 #############################################
 # funciones de garra y elevador #
@@ -135,13 +136,12 @@ def cerrar_hasta_top():
    print("banana con quevedo")
 # =========================================
 def cerrar_garra():
-    claw_motor.run(speed=-100)
-    wait(500)
+    claw_motor.run(speed=-200)
+    #muerto el wait de cerrar garra
 # =========================================
 def abrir_garra():
-    claw_motor.stop()
-    claw_motor.run_target(speed=200, target_angle=180,wait=True)
-    claw_motor.run_target(speed=200, target_angle=180,wait=True)
+    #habian dos run targets, y wait era True
+    claw_motor.run_target(speed=200, target_angle=180,wait=False)
 
 #pueden usar run_until_stall para resetear el mecanismo de ascensor 
 # =========================================

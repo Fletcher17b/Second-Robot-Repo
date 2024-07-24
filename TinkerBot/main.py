@@ -23,36 +23,20 @@ fd.movimientoRecto(-200)
 #df.robot.reset()
 
 #para adelante acomodarse 1
-fd.movimientoRecto(235)
+ge.abrir_garra()
 
-df.robot.stop()
+fd.movimientoRecto(295)
+ge.cerrar_garra()
+
 
 e1.reset_angle(0)
 e2.reset_angle(0)
 
 df.robot.reset()
 
-fd.girar(90)
+#aqui iria un cerrar
 
-ge.abrir_garra()
+fd.girar(95)
 
-fd.movimientoRecto(270)
 
-ge.cerrar_garra()
-ge.cerrar_garra()
 
-fd.movimientoRecto(245)
-
-fd.girar(15)
-
-fd.movimientoRecto(15)
-
-ge.moverElevadorGrua(True,360)
-
-ge.abrir_garra()
-fd.girar(-20)
-
-df.wait(200)
-
-fd.girar(20)
-ge.moverElevadorGrua(False,360)
