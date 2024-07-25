@@ -13,68 +13,73 @@ e1 = Motor(Port.C)
 e2 = Motor(Port.D)
 ev3 = EV3Brick()
 
+robot_speaker = ev3.speaker
+
 import funcionesDesplazamiento as fd
 import funcionesGarraYElevador as ge
 import definitions as df
 
+# Función para reproducir una canción
 def play_song():
+
     while(True): 
-        df.ev3.speaker.beep(500, 214)
+        robot_speaker.beep(500, 214)
         wait(214)
 
-        df.ev3.speaker.beep(500, 214)
-        df.ev3.speaker.beep(420, 214)
+        robot_speaker.beep(500, 214)
+        robot_speaker.beep(420, 214)
 
         wait(214)
-        df.ev3.speaker.beep(500, 214)
+        robot_speaker.beep(500, 214)
 
         wait(214)
-        df.ev3.speaker.beep(500, 214)
+        robot_speaker.beep(500, 214)
 
         wait(214)
-        df.ev3.speaker.beep(472, 214)
+        robot_speaker.beep(472, 214)
 
         wait(214)
-        df.ev3.speaker.beep(375, 214)
+        robot_speaker.beep(375, 214)
 
-        df.ev3.speaker.beep(749, 214)
+        robot_speaker.beep(749, 214)
 
         wait(107)
-        df.ev3.speaker.beep(749, 214)
+        robot_speaker.beep(749, 214)
 
         wait(107)
-        df.ev3.speaker.beep(630, 214)
+        robot_speaker.beep(630, 214)
 
-        df.ev3.speaker.beep(500, 214)
+        robot_speaker.beep(500, 214)
         wait(214)
 
-        df.ev3.speaker.beep(500, 214)
-        df.ev3.speaker.beep(420, 214)
+        robot_speaker.beep(500, 214)
+        robot_speaker.beep(420, 214)
 
         wait(214)
-        df.ev3.speaker.beep(500, 214)
+        robot_speaker.beep(500, 214)
 
         wait(214)
-        df.ev3.speaker.beep(500, 214)
+        robot_speaker.beep(500, 214)
 
         wait(214)
-        df.ev3.speaker.beep(472, 214)
+        robot_speaker.beep(472, 214)
 
         wait(214)
-        df.ev3.speaker.beep(375, 214)
+        robot_speaker.beep(375, 214)
 
-        df.ev3.speaker.beep(667, 214)
+        robot_speaker.beep(667, 214)
 
         wait(107)
-        df.ev3.speaker.beep(667, 214)
+        robot_speaker.beep(667, 214)
 
         wait(107)
-        df.ev3.speaker.beep(630, 214)
+        robot_speaker.beep(630, 214)
 
 # Description: Trayectoria de TinkerBot
 
-def main(): 
+def first_phase(): 
 
+    print(df.robot.settings())
     ge.cerrar_hasta_top()
 
     #para atras acomodarse 1 
@@ -105,7 +110,7 @@ def main():
 
     fd.girar(91)
 
-    fd.movimientoRecto(410)
+    fd.movimientoRecto(420)
 
     wait(500)
     ge.moverElevadorGrua(True,240)
@@ -120,27 +125,49 @@ def main():
 
     fd.movimientoRecto(90)
 
-    ge.moverElevadorGrua(False,180)
+    ge.moverElevadorGrua(False,160)
     ge.abrir_garra()
-    wait(500)
+    wait(1000)
 
     ge.moverElevadorGrua(False,140)
-    fd.movimientoRecto(10)
-    ge.moverElevadorGrua(True,70)
+    fd.movimientoRecto(15)
+    ge.moverElevadorGrua(True,50)
     ge.cerrar_hasta_top()
 
     ge.moverElevadorGrua(True,90)
 
-    fd.movimientoRecto(-60)
-    fd.girar(-89)
+    fd.movimientoRecto(-65)
+    fd.girar(-90)
 
-    fd.movimientoRecto(-20000)
-    fd.girar(-89)
+    fd.movimientoRecto(-900)
+    fd.girar(-90)
 
-    fd.movimientoRecto(200)
+    fd.movimientoRecto(350)
+    fd.girar(-90)
 
-thread1 = threading.Thread(target=play_song)
-thread2 = threading.Thread(target=main)
+    fd.movimientoRecto(800)
+    fd.girar(-25)
 
-thread1.start()
-thread2.start()
+    ge.moverElevadorGrua(False,70)
+    fd.movimientoRecto(120)
+
+    ge.moverElevadorGrua(True,245)
+    fd.girar(-30)
+
+    fd.girar(30)
+    fd.girar(90)
+    fd.girar(25)
+
+    fd.movimientoRecto(150)
+    ge.moverElevadorGrua(False,280)
+    ge.abrir_garra()
+
+    
+
+#thread1 = threading.Thread(target=play_super_mario)
+#thread2 = threading.Thread(target=first_phase)
+
+#thread1.start()
+#thread2.start()
+
+first_phase()
