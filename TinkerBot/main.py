@@ -76,5 +76,5 @@ ge.moverElevadorGrua(True,70)
 ge.cerrar_hasta_top()
 
 ge.moverElevadorGrua(True,90)
-fd.girar(90)
-fd.movimientoRecto(1000)
+fd.girar(105)
+fd.movimientoRecto(1500)
