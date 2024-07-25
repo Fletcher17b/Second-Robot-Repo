@@ -7,6 +7,8 @@ from pybricks.hubs import EV3Brick
 #Esto no fue posible de modularizar, por lo que se tuvo que hacer en el main
 #Sin embargo, el hecho de que las funciones no se puedan modularizar, hace que entonces
 #sea más claro cuando hay reset.angle o reset
+
+#estos no precisa direccion y gears uwu :3
 e1 = Motor(Port.C)
 e2 = Motor(Port.D)
 ev3 = EV3Brick()

@@ -6,7 +6,8 @@ from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
                                  InfraredSensor, UltrasonicSensor, GyroSensor)
 from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
-#usar un cvs para anotar las cosas??? DataLog?
+# librerías que no sé si deberían d estar, DataLog, y de los Sensors, solo debería estar
+#c ColorSensor
 from pybricks.robotics import DriveBase
 # =============================================================================
 
@@ -17,15 +18,12 @@ import definitions as df
 #########################
 
 engranajes_grua = [[20,12],[20,12]]
-perfi_tolerancia_grua = 11
 direccion = Direction.CLOCKWISE
 reiniciar_angulo = True
 
 #grua_motor = Motor(Port.B,direccion,engranajes_grua)
-
-
-#grua_motor = Motor(Port.B,positive_direction=Direction.CLOCKWISE,gears=[[20,12],[20,12]],reset_angle=True,profile=11)
-grua_motor = Motor(Port.B,direccion,engranajes_grua)
+#grua_motor = Motor(Port.B,positive_direction=Direction.CLOCKWISE,gears=[[20,12],[20,12]])
+grua_motor = Motor(Port.B,Direction.CLOCKWISE,engranajes_grua)
 
 MOVIMIENTO_TOTAL = 0
 GRUA_MAXIMO = 360
@@ -46,7 +44,6 @@ BLOQUE_ALTURA = 280
 ###########################
 
 LAST_CLAW_ANGLE = 0
-perfil_tolerancia_garra = 11
 
 engranajes_garra = [8,40]
 #el engranaje chiquitito de 8 esta conectado directo al motor, le pasa la fuerza al de 40,
