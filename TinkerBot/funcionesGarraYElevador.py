@@ -21,9 +21,11 @@ perfi_tolerancia_grua = 11
 direccion = Direction.CLOCKWISE
 reiniciar_angulo = True
 
-#grua_motor = Motor(Port.B,direccion,engranajes_grua,reiniciar_angulo,perfil_tolerancia_grua)
+#grua_motor = Motor(Port.B,direccion,engranajes_grua)
+
+
 #grua_motor = Motor(Port.B,positive_direction=Direction.CLOCKWISE,gears=[[20,12],[20,12]],reset_angle=True,profile=11)
-grua_motor = Motor(Port.B)
+grua_motor = Motor(Port.B,direccion,engranajes_grua)
 
 MOVIMIENTO_TOTAL = 0
 GRUA_MAXIMO = 360
