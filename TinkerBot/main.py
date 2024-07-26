@@ -14,8 +14,6 @@ import threading
 #Esto no fue posible de modularizar, por lo que se tuvo que hacer en el main
 #Sin embargo, el hecho de que las funciones no se puedan modularizar, hace que entonces
 #sea más claro cuando hay reset.angle o reset
-
-#estos no precisa direccion y gears uwu :3
 e1 = Motor(Port.C)
 e2 = Motor(Port.D)
 ev3 = EV3Brick()
@@ -228,50 +226,10 @@ def first_phase():
     
 def second_phase():
     print("Empezando segunda fase")
-    fd.girar(-45)
-    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
-        fd.movimientoRecto(10)
-
-    fd.girar(123)
-    fd.movimientoRecto(-130)
-    fd.girar(-90)
-    fd.movimientoRecto(-200)
-
-    #acomodado chatel
-
-    ge.cerrar_hasta_top()
-    ge.abrir_garra()
-    fd.movimientoRecto(330)
-    ge.cerrar_hasta_top()
-
-    wait(500)
-    ge.moverElevadorGrua(True,180)
-    #despues de agarrar escombro pequeno 2
-
-    fd.movimientoRecto(415)
-    fd.girar(25)
-    fd.movimientoRecto(55)
-    fd.girar(-15)
-    fd.movimientoRecto(15)
-
-    ge.abrir_garra
-    ge.cerrar_hasta_top
-    ge.moverElevadorGrua(True,360)
-
-
-
-    wait(500)
-
-def testphase():
-    ge.moverElevadorGrua(True,360)
-
-
 #thread1 = threading.Thread(target=play_song)
 #thread2 = threading.Thread(target=first_phase)
 
 #thread1.start()
 #thread2.start()
 
-
-#second_phase()
-testphase()
+first_phase()
