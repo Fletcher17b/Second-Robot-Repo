@@ -30,7 +30,7 @@ GRUA_MAXIMO = 360
 BLOQUE_ALTURA = 280
 
 # que implicacion tienen esos 80 grados de diferencia entre GRUA_MAXIMO y BLOQUE_ALTURA
-
+ 
 
 #los engranajes, son dos de 20 conectados directo al motor grande, de los cuales
 #se les transfiere el torque a unos de 12
