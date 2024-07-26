@@ -200,11 +200,11 @@ def first_phase():
 
     # Nos giramos hacia el basurero y depositamos los escombros
     fd.girar(90)
-    fd.movimientoRecto(30) # Movemos 30cm contra el basurero
+    fd.movimientoRecto(80) # Movemos 8cm contra el basurero
 
     ge.moverElevadorGrua(False,280) # Bajamos la grua para depositar los escombros
     ge.abrir_garra() # Abrimos la garra
-    fd.movimientoRecto(-30) # Deshacemos los 30cm que nos movimos
+    fd.movimientoRecto(-80) # Deshacemos los 8cm que nos movimos
     wait(1000)
 
     # =========================================
