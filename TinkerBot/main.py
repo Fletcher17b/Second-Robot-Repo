@@ -1,9 +1,14 @@
 #!/usr/bin/env pybricks-micropython
 
-from pybricks.ev3devices import Motor
-from pybricks.parameters import Port    
-from pybricks.tools import wait
+# =============================================================================
+# LIBRERIAS BOILERPLATE
 from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                 InfraredSensor, UltrasonicSensor, GyroSensor)
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+# =============================================================================
 
 import threading
 #Esto no fue posible de modularizar, por lo que se tuvo que hacer en el main
@@ -14,6 +19,9 @@ import threading
 e1 = Motor(Port.C)
 e2 = Motor(Port.D)
 ev3 = EV3Brick()
+
+sensorColor1 = ColorSensor(Port.S1)
+sensorColor2 = ColorSensor(Port.S4)
 
 robot_speaker = ev3.speaker
 
@@ -81,92 +89,146 @@ def play_song():
 
 def first_phase(): 
 
+    # =========================================
+    # Inicio de la trayectoria
+
+    # Imprimir Settings del robot
     print(df.robot.settings())
-    ge.cerrar_hasta_top()
 
-    #para atras acomodarse 1 
-    fd.movimientoRecto(-200)
+    # =========================================
+    # Fase 1.1: Alineación inicial
+    # =========================================
 
-    #df.robot.reset()
+    # El robot cierra la garra 
+    ge.cerrar_hasta_top() # Cierra la garra hasta que ya no puede
+    fd.movimientoRecto(-200) # El robot se mueve hacia atrás para alinearse con la pared
 
-    #para adelante acomodarse 1
+    # =========================================
+    # Fase 1.2: Primer Escombro (Amarillo)
+    # =========================================
 
+    # Abrir la garra para agarrar el escombro
     ge.abrir_garra()
 
-    fd.movimientoRecto(335)
+    # Movernos hacia adelante para agarrar el escombro
+    fd.movimientoRecto(350) # El robot se mueve 35cm hacia adelante
 
+    # Cerrar la garra para agarrar el escombro
     ge.cerrar_hasta_top()
 
+    # Subimos el elevador para evitar fricción con el suelo
     ge.moverElevadorGrua(True,90)
 
-    fd.movimientoRecto(125)
+    # Movemos el robot hacia adelante para alinearnos con la primera pipa
+    fd.movimientoRecto(85) # El robot se mueve 8cm hacia adelante
 
-    wait(500)
-    df.robot.stop()
-    e1.reset_angle(0)
-    e2.reset_angle(0)
+    wait(500) # Esperamos medio segundo para marcar el final de la fase
 
-    df.robot.reset()
+    # =========================================
+    # Fase 1.3: Levantar la pipa
+    # =========================================
 
-    #aqui iria un cerrar
+    # Giramos el robot 90 grados a la derecha
+    fd.girar(90)
 
-    fd.girar(91)
+    # Movemos el robot hacia adelante para alinearnos con la pipa
+    fd.movimientoRecto(420) # El robot se mueve 42cm hacia adelante
 
-    fd.movimientoRecto(420)
+    wait(250) # Esperamos un cuarto de segundo para asegurar que el robot ya se movio adelante
 
-    wait(500)
+    # Levantamos la pipa con la grua
     ge.moverElevadorGrua(True,240)
-    fd.girar(-30)
 
-    fd.girar(30)
+    # Giramos para terminar de levantar la grua
+    fd.girar(-30) # Giramos 30 grados a la izquierda
+    fd.girar(30) # Reseteamos el angulo
 
+    # =========================================
+    # Fase 1.4: Apilar escombro amarillo
+    # =========================================
 
-    fd.movimientoRecto(-10)
+    # Retrocedemos 0.5cm para alinearnos contra el escombro gris
+    fd.movimientoRecto(-5)
 
-    fd.girar(86)
+    # Giramos hacia el escombro
+    fd.girar(90)
 
-    fd.movimientoRecto(90)
+    # Avanzamos hacia el escombro gris para posicionarnos
+    fd.movimientoRecto(75)
 
-    ge.moverElevadorGrua(False,160)
+    # Bajamos la grua para dejar el escombro amarillo ligeramente
+    ge.moverElevadorGrua(False,140)
+
+    # Abrimos la garra y depositamos el escombro
     ge.abrir_garra()
+    wait(1000) # Esperamos 1s mientras se abre la garra
+
+    # Bajamos la grua para agarrar ambos escombros
+    ge.moverElevadorGrua(False,180)
+
+    # Nos movemos hacia adelante para alinear los dos escombros
+    fd.movimientoRecto(50)
+
+    # Cerramos la garra hasta que no se pueda
+    ge.cerrar_hasta_top()
+
+    # =========================================
+    # Fase 1.5: Depositar los escombros
+    # =========================================
+
+    # Nos movemos hacia atras para preparar el recorrido
+    fd.movimientoRecto(-80)
+
+    # Hacemos un ligero movimiento para evitar chocar contra la pipa
+    fd.girar(-45) # Giramos 45 grados a la izquierda
+    fd.movimientoRecto(-50) # Nos movemos 5cm hacia atras
+    fd.girar(-48) # Giramos 48 grados a la izquierda (para completar el giro)
+
+    # Ahora nos movemos hacia el centro del tablero
+    fd.movimientoRecto(-900) # Nos movemos 90cm para atras
+
+    # Giramos para alinearnos con la linea superior
+    fd.girar(-90)
+
+    # Nos movemos hacia la linea
+    fd.movimientoRecto(350)
+
+    # Estando alineados con la linea superior, la recorremos y avanzamos
+    # hasta llegar al espacio de los escombros
+    fd.girar(-90)
+    fd.movimientoRecto(800) # Nos movemos hacia adelante 80cm
+
+    # Nos giramos hacia el basurero y depositamos los escombros
+    fd.girar(90)
+    fd.movimientoRecto(30) # Movemos 30cm contra el basurero
+
+    ge.moverElevadorGrua(False,280) # Bajamos la grua para depositar los escombros
+    ge.abrir_garra() # Abrimos la garra
+    fd.movimientoRecto(-30) # Deshacemos los 30cm que nos movimos
     wait(1000)
 
-    ge.moverElevadorGrua(False,140)
-    fd.movimientoRecto(15)
-    ge.moverElevadorGrua(True,50)
-    ge.cerrar_hasta_top()
+    # =========================================
+    # Fase 1.6: Alineación Final
+    # =========================================
 
-    ge.moverElevadorGrua(True,90)
-
-    fd.movimientoRecto(-65)
+    # Vamos en contra a la pista inicial
     fd.girar(-90)
 
-    fd.movimientoRecto(-900)
+    # Hacemos un avance inicial
+    fd.movimientoRecto(-150)
+
+    # Hacemos un bucle de tanteo hasta que encontramos rojo (de la pista inicial)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(-10)
+    
+    # Cuando lo encontremos nos alineamos contra la pared
     fd.girar(-90)
-
-    fd.movimientoRecto(350)
-    fd.girar(-90)
-
-    fd.movimientoRecto(800)
-    fd.girar(-25)
-
-    ge.moverElevadorGrua(False,70)
-    fd.movimientoRecto(120)
-
-    ge.moverElevadorGrua(True,245)
-    fd.girar(-30)
-
-    fd.girar(30)
-    fd.girar(90)
-    fd.girar(25)
-
-    fd.movimientoRecto(150)
-    ge.moverElevadorGrua(False,280)
-    ge.abrir_garra()
+    fd.movimientoRecto(-200)
 
     
-
-#thread1 = threading.Thread(target=play_super_mario)
+def second_phase():
+    print("Empezando segunda fase")
+#thread1 = threading.Thread(target=play_song)
 #thread2 = threading.Thread(target=first_phase)
 
 #thread1.start()
