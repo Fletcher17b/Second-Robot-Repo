@@ -29,8 +29,6 @@ import definitions as df
 
 # Función para reproducir una canción
 def play_song():
-
-    while(True): 
         robot_speaker.beep(500, 214)
         wait(214)
 
@@ -130,7 +128,7 @@ def first_phase():
     fd.girar(90)
 
     # Movemos el robot hacia adelante para alinearnos con la pipa
-    fd.movimientoRecto(420) # El robot se mueve 42cm hacia adelante
+    fd.movimientoRecto(410) # El robot se mueve 41cm hacia adelante
 
     wait(250) # Esperamos un cuarto de segundo para asegurar que el robot ya se movio adelante
 
@@ -144,9 +142,6 @@ def first_phase():
     # =========================================
     # Fase 1.4: Apilar escombro amarillo
     # =========================================
-
-    # Retrocedemos 0.5cm para alinearnos contra el escombro gris
-    fd.movimientoRecto(-5)
 
     # Giramos hacia el escombro
     fd.girar(90)
@@ -165,7 +160,7 @@ def first_phase():
     ge.moverElevadorGrua(False,180)
 
     # Nos movemos hacia adelante para alinear los dos escombros
-    fd.movimientoRecto(50)
+    fd.movimientoRecto(40)
 
     # Cerramos la garra hasta que no se pueda
     ge.cerrar_hasta_top()
@@ -189,12 +184,12 @@ def first_phase():
     fd.girar(-90)
 
     # Nos movemos hacia la linea
-    fd.movimientoRecto(350)
+    fd.movimientoRecto(300)
 
     # Estando alineados con la linea superior, la recorremos y avanzamos
     # hasta llegar al espacio de los escombros
     fd.girar(-90)
-    fd.movimientoRecto(800) # Nos movemos hacia adelante 80cm
+    fd.movimientoRecto(900) # Nos movemos hacia adelante 80cm
 
     # Nos giramos hacia el basurero y depositamos los escombros
     fd.girar(90)
@@ -226,10 +221,84 @@ def first_phase():
     
 def second_phase():
     print("Empezando segunda fase")
-#thread1 = threading.Thread(target=play_song)
-#thread2 = threading.Thread(target=first_phase)
+    fd.girar(-45)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(10)
 
-#thread1.start()
-#thread2.start()
+    fd.girar(123)
+    fd.movimientoRecto(-130)
+    fd.girar(-90)
+    fd.movimientoRecto(-150)
+
+    #acomodado chatel
+
+    ge.cerrar_hasta_top()
+    ge.abrir_garra()
+    fd.movimientoRecto(340)
+    ge.cerrar_hasta_top()
+
+    wait(500)
+    #despues de agarrar escombro pequeno 2
+
+    fd.movimientoRecto(415)
+    fd.movimientoRecto(140)
+
+    fd.movimientoRecto(-900)
+    fd.movimientoRecto(30)
+    fd.girar(90)
+
+    fd.movimientoRecto(500)
+    ge.abrir_garra()
+
+    fd.movimientoRecto(-220)
+
+    # Hacemos un bucle de tanteo hasta que encontramos rojo (de la pista inicial)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(-5)
+    
+    # Cuando lo encontremos nos alineamos contra la pared
+    fd.girar(-90)
+    fd.movimientoRecto(-40)
+
+    fd.girar(-45)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(10)
+
+    fd.girar(123)
+    fd.movimientoRecto(-130)
+    fd.girar(-90)
+    fd.movimientoRecto(-200)
+
+    # =========================================
+    # Fase 1.3: Levantar la pipa
+    # =========================================
+
+    fd.movimientoRecto(290)
+    fd.girar(90)
+
+    ge.cerrar_hasta_top()
+    fd.movimientoRecto(500)
+
+    # Levantamos la pipa con la grua
+    ge.moverElevadorGrua(True,330)
+
+    # Giramos para terminar de levantar la grua
+    fd.girar(-30) # Giramos 30 grados a la izquierda
+    fd.girar(30) # Reseteamos el angulo
+    
+    fd.movimientoRecto(-250)
+    fd.girar(-90)
+    fd.movimientoRecto(-100)
+
+    fd.girar(90)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(-10)
+
+    fd.girar(-90)
+    fd.movimientoRecto(-200)
+
+    wait(500)
 
 first_phase()
+play_song()
+second_phase()
