@@ -357,30 +357,61 @@ def third_phase():
     #ge.cerrar_hasta_top()
     #fd.movimientoRecto(-200)
 
+    ge.moverElevadorGrua(True,10)
     fd.movimientoRecto(155)
     fd.girar(-90)
 
     fd.movimientoRecto(260)
-    fd.girar(-90)
+    fd.girar(-85)
 
-    fd.movimientoRecto(110)
+    #avanza para agarrar primera roja
+    fd.movimientoRecto(87) 
     ge.cerrar_garra()
 
     wait(300)
 
-    while(sensorColor1.color() != Color.BLACK and sensorColor2.color() != Color.BLACK):
-        fd.movimientoRecto(-2.5)
-    
-    fd.girar(92)
-    fd.movimientoRecto(110)
+    #retrocede
 
-    ge.moverElevadorGrua(True,285)
+    while(sensorColor1.color() != Color.BLACK and sensorColor2.color() != Color.BLACK):
+        fd.movimientoRecto(-5)
+
+
+    fd.girar(90)
+    if(sensorColor1.color() != Color.WHITE and sensorColor2.color() != Color.WHITE):
+        fd.movimientoRecto(100)
+
     fd.girar(-90)
+
+    #este avance fue mucho :(
     fd.movimientoRecto(40)
 
     ge.moverElevadorGrua(False,60)
 
     ge.grua_motor.stop()
+    ge.claw_motor.stop()
     ge.abrir_garra()
+    ge.moverElevadorGrua(False,280)
+    ge.cerrar_garra()
+    fd.movimientoRecto(-10)
+
+
+
+
+    while(sensorColor1.color() != Color.BLACK and sensorColor2.color() != Color.BLACK):
+        fd.movimientoRecto(-5)
+
+    fd.girar(90)
+    fd.movimientoRecto(40)
+    fd.girar(-90)
+    fd.movimientoRecto(115)
+
+    ge.grua_motor.stop()
+    ge.abrir_garra()
+
+    #bajar para agarrar el primer amarillo
+    ge.moverElevadorGrua(False,280)
+    ge.cerrar_garra()
+    ge.moverElevadorGrua(True,280)
+
 
 third_phase()
