@@ -330,6 +330,45 @@ def second_phase():
 
     wait(500)
 
+
+def casas():
+    fd.girar(90)
+    fd.movimientoRecto(100)
+
+    #bloque rojo 1
+    ge.cerrar_hasta_top()
+    ge.moverElevadorGrua(True,285)
+
+    #bloque rojo 2
+    fd.movimientoRecto(100)
+    ge.drop()
+    ge.moverElevadorGrua(False,290)
+    ge.abrir_garra()
+    ge.cerrar_hasta_top()
+    ge.moverElevadorGrua(True,285)
+
+    #bloque amarillo 1
+    fd.movimientoRecto(100)
+    ge.drop()
+    ge.moverElevadorGrua(False,290)
+    ge.abrir_garra()
+    ge.cerrar_hasta_top()
+    ge.moverElevadorGrua(True,285)
+    
+    #bloque amarillo 2
+    fd.movimientoRecto(100)
+    ge.drop()
+    ge.moverElevadorGrua(False,290)
+    ge.cerrar_hasta_top()
+    ge.moverElevadorGrua(True,285)
+    
+    #salirse de casas 1
+    fd.girar(-70)
+    fd.movimientoRecto(800)
+
+
+
+
 alternate_start()
 first_phase()
 second_phase()
