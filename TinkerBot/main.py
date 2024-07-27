@@ -20,6 +20,7 @@ ev3 = EV3Brick()
 
 sensorColor1 = ColorSensor(Port.S1)
 sensorColor2 = ColorSensor(Port.S4)
+sensorColor3 = ColorSensor(Port.S3)
 
 robot_speaker = ev3.speaker
 
@@ -100,6 +101,8 @@ def alternate_start():
     # Cuando lo encontremos nos alineamos contra la pared
     fd.girar(-90)
     fd.movimientoRecto(-200)
+
+
 
     fd.girar(-45)
     while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
@@ -341,39 +344,67 @@ def second_phase():
 
     wait(500)
 
-def casas():
-    fd.girar(90)
-    fd.movimientoRecto(100)
+def third_phase():
 
-    #bloque rojo 1
+    fd.girar(-45)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(10)
+
+    fd.girar(123)
+    fd.movimientoRecto(-130)
+    fd.girar(-90)
+
+    ge.cerrar_hasta_top()
+    fd.movimientoRecto(-200)
+
+    fd.movimientoRecto(100)
+    fd.girar(-45)
+
+    fd.movimientoRecto(-130)
+
+    fd.girar(-70)
+    fd.movimientoRecto(140)
+
+    df.robot.stop()
+    df.blue_motor.run_angle(-100, 197.5)
+
+        #bloque rojo 1
+    ge.abrir_garra()
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        print("Buscando Rojo")
+        fd.movimientoRecto(-10)
+
+    fd.movimientoRecto(270)
+
     ge.cerrar_hasta_top()
     ge.moverElevadorGrua(True,285)
 
-    #bloque rojo 2
+        #bloque rojo 2
+    fd.movimientoRecto(100)
+    ge.abrir_garra()
+    ge.moverElevadorGrua(False,290)
+    ge.cerrar_hasta_top()
+    ge.moverElevadorGrua(True,285)
+
+        #bloque amarillo 1
     fd.movimientoRecto(100)
     ge.drop()
     ge.moverElevadorGrua(False,290)
     ge.abrir_garra()
     ge.cerrar_hasta_top()
     ge.moverElevadorGrua(True,285)
+        
+        #bloque amarillo 2
+    fd.movimientoRecto(100)
+    ge.drop()
+    ge.moverElevadorGrua(False,290)
+    ge.cerrar_hasta_top()
+    ge.moverElevadorGrua(True,285)
 
-    #bloque amarillo 1
-    fd.movimientoRecto(100)
-    ge.drop()
-    ge.moverElevadorGrua(False,290)
-    ge.abrir_garra()
-    ge.cerrar_hasta_top()
-    ge.moverElevadorGrua(True,285)
-    
-    #bloque amarillo 2
-    fd.movimientoRecto(100)
-    ge.drop()
-    ge.moverElevadorGrua(False,290)
-    ge.cerrar_hasta_top()
-    ge.moverElevadorGrua(True,285)
-    
-    #salirse de casas 1
+        #salirse de casas 1
     fd.girar(-70)
     fd.movimientoRecto(800)
 
-second_phase()
+#third_phase()
+
+

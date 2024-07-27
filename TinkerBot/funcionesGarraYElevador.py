@@ -130,6 +130,11 @@ def drop():
     grua_motor.stalled()
 # =========================================
 
+def cerrar_hasta_muerte():
+    claw_motor.run_until_stalled(speed=-100, duty_limit=100)
+    print("cerrar_hasta_muerte(): Se ha llegado al duty limit")
+    print("naranja con anuel")
+
 def cerrar_hasta_top():
    claw_motor.run_until_stalled(speed=-100,duty_limit=40)
    print("cerrar_hasta_top(): Se ha llegado al duty limit")
@@ -143,6 +148,9 @@ def cerrar_garra():
 def abrir_garra():
     #habian dos run targets, y wait era True
     claw_motor.run_target(speed=200, target_angle=-30,wait=False)
+
+def abrir_garra_ang(angulo):
+    claw_motor.run_target(speed=200, target_angle=-angulo,wait=False)
 
 #pueden usar run_until_stall para resetear el mecanismo de ascensor 
 # =========================================
