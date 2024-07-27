@@ -346,23 +346,32 @@ def second_phase():
 
 def third_phase():
 
-    #fd.girar(-45)
-    #while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
-        #fd.movimientoRecto(10)
 
-    #fd.girar(123)
-    #fd.movimientoRecto(-130)
-    #fd.girar(-90)
-
-    #ge.cerrar_hasta_top()
-    #fd.movimientoRecto(-200)
-
+    #subimos la grua un poquitito para reducir friccion
     ge.moverElevadorGrua(True,10)
-    fd.movimientoRecto(155)
+    fd.movimientoRecto(150)
+    #avanza hasta que, al girar, los sensores esten perpendiculares a las lineas blancas
     fd.girar(-90)
 
-    fd.movimientoRecto(260)
-    fd.girar(-85)
+    #avanzamos ese poquitito para poner los sensores sobre el blanco iniciial
+    fd.movimientoRecto(10)
+
+
+    #emilio, checkea tu line-tracking
+    while(sensorColor1.color() == Color.WHITE and sensorColor2.color() == Color.WHITE):
+        fd.movimientoRecto(120)
+        
+        #la primera distancia paralela a los bloques antes del primero desde los sensores
+        #registrando el color blanco por primera vez, hasta el medio del primer bloque
+        #es de 8.5 cm,
+        #de la mitad del primer bloque a la mitad del segundo y asi sucesivamente, son 9.5cm
+
+        #considerando esa discrepancia de las distancias, 
+        #if distancia recorrida, la separacion entre los bloques (14.25cm), entonces, girar 90,
+        #y ejecutar funcion de bloques
+    #EMILIO LEE ESTO TRABAJA HACE ALGO LOCO
+        
+    fd.girar(-90)
 
     #avanza para agarrar primera roja
     fd.movimientoRecto(87) 
@@ -370,26 +379,31 @@ def third_phase():
 
     wait(300)
 
-    #retrocede
+    #retrocede hasta encontrar rojo
 
     while(sensorColor1.color() != Color.BLACK and sensorColor2.color() != Color.BLACK):
         fd.movimientoRecto(-5)
 
 
-    fd.girar(90)
-    if(sensorColor1.color() != Color.WHITE and sensorColor2.color() != Color.WHITE):
-        fd.movimientoRecto(100)
-
+    #todo lo que esta abajo de esto debe ir comentado bien una vez se implemente lo que esta arriba
+    ge.moverElevadorGrua(True,280)
     fd.girar(-90)
 
     #este avance fue mucho :(
     fd.movimientoRecto(40)
 
+    #este bajar no me acuerdo para que era
     ge.moverElevadorGrua(False,60)
 
+
+    #se detiene para bajar el primer bloque rojo sobre el segundo bloque rojo
     ge.grua_motor.stop()
     ge.claw_motor.stop()
     ge.abrir_garra()
+
+    #baja para ponerlas ambas sobre el piso,
+    #aqui necesitamos hacer que las jale un poco, y luego las empuje hacia adelante,
+    #para levantarla el stack corrigiendo errores en el agarrado
     ge.moverElevadorGrua(False,280)
     ge.cerrar_garra()
     fd.movimientoRecto(-10)
