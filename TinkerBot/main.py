@@ -81,6 +81,36 @@ def play_song():
         wait(107)
         robot_speaker.beep(630, 214)
 
+def alternate_start():
+    fd.movimientoRecto(-200)
+    fd.movimientoRecto(200)
+
+    fd.girar(-90)
+    fd.movimientoRecto(350)
+
+    fd.girar(90)
+    fd.movimientoRecto(550)
+
+    fd.girar(-90)
+    fd.movimientoRecto(810)
+
+    # Hacemos un bucle de tanteo hasta que encontramos rojo (de la pista inicial)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(-5)
+    
+    # Cuando lo encontremos nos alineamos contra la pared
+    fd.girar(-90)
+    fd.movimientoRecto(-150)
+
+    fd.girar(-45)
+    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        fd.movimientoRecto(10)
+
+    fd.girar(123)
+    fd.movimientoRecto(-130)
+    fd.girar(-90)
+    fd.movimientoRecto(-200)
+
 # Description: Trayectoria de TinkerBot
 
 def first_phase(): 
@@ -97,7 +127,7 @@ def first_phase():
 
     # El robot cierra la garra 
     ge.cerrar_hasta_top() # Cierra la garra hasta que ya no puede
-    fd.movimientoRecto(-200) # El robot se mueve hacia atrás para alinearse con la pared
+    fd.movimientoRecto(-100) # El robot se mueve hacia atrás para alinearse con la pared
 
     # =========================================
     # Fase 1.2: Primer Escombro (Amarillo)
@@ -162,6 +192,7 @@ def first_phase():
     # Nos movemos hacia adelante para alinear los dos escombros
     fd.movimientoRecto(40)
 
+    ge.moverElevadorGrua(True,90)
     # Cerramos la garra hasta que no se pueda
     ge.cerrar_hasta_top()
 
@@ -299,6 +330,6 @@ def second_phase():
 
     wait(500)
 
+alternate_start()
 first_phase()
-play_song()
 second_phase()
