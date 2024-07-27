@@ -29,6 +29,11 @@ def movimientoRecto(distance):
 
 
 def girar(angle):
+    """
+    Girar el robot en un angulo determinado, angulo negativo gira a la derecha y positivo a la izquierda
+    """ 
+
+    wait(350)
     df.robot.turn(angle)
     df.robot.stop()
     return

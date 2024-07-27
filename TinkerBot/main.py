@@ -92,15 +92,14 @@ def alternate_start():
     fd.movimientoRecto(550)
 
     fd.girar(-90)
-    fd.movimientoRecto(810)
-
+    fd.movimientoRecto(750)
     # Hacemos un bucle de tanteo hasta que encontramos rojo (de la pista inicial)
     while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
         fd.movimientoRecto(-5)
     
     # Cuando lo encontremos nos alineamos contra la pared
     fd.girar(-90)
-    fd.movimientoRecto(-150)
+    fd.movimientoRecto(-200)
 
     fd.girar(-45)
     while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
@@ -109,7 +108,6 @@ def alternate_start():
     fd.girar(123)
     fd.movimientoRecto(-130)
     fd.girar(-90)
-    fd.movimientoRecto(-200)
 
 # Description: Trayectoria de TinkerBot
 
@@ -139,14 +137,14 @@ def first_phase():
     # Movernos hacia adelante para agarrar el escombro
     fd.movimientoRecto(350) # El robot se mueve 35cm hacia adelante
 
-    # Cerrar la garra para agarrar el escombro
+    # Cerrar la garra para agarrar el escombro amarillo
     ge.cerrar_hasta_top()
 
     # Subimos el elevador para evitar fricción con el suelo
     ge.moverElevadorGrua(True,90)
 
     # Movemos el robot hacia adelante para alinearnos con la primera pipa
-    fd.movimientoRecto(85) # El robot se mueve 8cm hacia adelante
+    fd.movimientoRecto(105) # El robot se mueve 8cm hacia adelante
 
     wait(500) # Esperamos medio segundo para marcar el final de la fase
 
@@ -158,7 +156,7 @@ def first_phase():
     fd.girar(90)
 
     # Movemos el robot hacia adelante para alinearnos con la pipa
-    fd.movimientoRecto(410) # El robot se mueve 41cm hacia adelante
+    fd.movimientoRecto(415) # El robot se mueve 41cm hacia adelante
 
     wait(250) # Esperamos un cuarto de segundo para asegurar que el robot ya se movio adelante
 
@@ -174,10 +172,10 @@ def first_phase():
     # =========================================
 
     # Giramos hacia el escombro
-    fd.girar(90)
+    fd.girar(87)
 
     # Avanzamos hacia el escombro gris para posicionarnos
-    fd.movimientoRecto(75)
+    fd.movimientoRecto(87)
 
     # Bajamos la grua para dejar el escombro amarillo ligeramente
     ge.moverElevadorGrua(False,140)
@@ -190,9 +188,10 @@ def first_phase():
     ge.moverElevadorGrua(False,180)
 
     # Nos movemos hacia adelante para alinear los dos escombros
-    fd.movimientoRecto(40)
+    fd.movimientoRecto(30)
 
     ge.moverElevadorGrua(True,90)
+
     # Cerramos la garra hasta que no se pueda
     ge.cerrar_hasta_top()
 
@@ -201,12 +200,13 @@ def first_phase():
     # =========================================
 
     # Nos movemos hacia atras para preparar el recorrido
-    fd.movimientoRecto(-80)
+    fd.movimientoRecto(-100)
 
     # Hacemos un ligero movimiento para evitar chocar contra la pipa
     fd.girar(-45) # Giramos 45 grados a la izquierda
+    
     fd.movimientoRecto(-50) # Nos movemos 5cm hacia atras
-    fd.girar(-48) # Giramos 48 grados a la izquierda (para completar el giro)
+    fd.girar(-46) # Giramos 48 grados a la izquierda (para completar el giro)
 
     # Ahora nos movemos hacia el centro del tablero
     fd.movimientoRecto(-900) # Nos movemos 90cm para atras
@@ -220,15 +220,17 @@ def first_phase():
     # Estando alineados con la linea superior, la recorremos y avanzamos
     # hasta llegar al espacio de los escombros
     fd.girar(-90)
-    fd.movimientoRecto(900) # Nos movemos hacia adelante 80cm
+    fd.movimientoRecto(950) # Nos movemos hacia adelante 80cm
 
     # Nos giramos hacia el basurero y depositamos los escombros
-    fd.girar(90)
-    fd.movimientoRecto(80) # Movemos 8cm contra el basurero
+    fd.girar(77)
+    fd.movimientoRecto(200) # Movemos 8cm contra el basurero
+
+    ge.abrir_garra() # Abrimos la garra
+    wait(500)
 
     ge.moverElevadorGrua(False,280) # Bajamos la grua para depositar los escombros
-    ge.abrir_garra() # Abrimos la garra
-    fd.movimientoRecto(-80) # Deshacemos los 8cm que nos movimos
+    fd.movimientoRecto(-200) # Deshacemos los 8cm que nos movimos
     wait(1000)
 
     # =========================================
@@ -272,16 +274,23 @@ def second_phase():
     #despues de agarrar escombro pequeno 2
 
     fd.movimientoRecto(415)
-    fd.movimientoRecto(140)
+    fd.movimientoRecto(120)
+    fd.girar(30)
+    fd.movimientoRecto(50)
+    fd.girar(-30)
+    fd.movimientoRecto(-100)
+
+    fd.girar(-15)
 
     fd.movimientoRecto(-900)
     fd.movimientoRecto(30)
+
     fd.girar(90)
 
     fd.movimientoRecto(500)
     ge.abrir_garra()
 
-    fd.movimientoRecto(-220)
+    fd.movimientoRecto(-250)
 
     # Hacemos un bucle de tanteo hasta que encontramos rojo (de la pista inicial)
     while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
@@ -293,7 +302,7 @@ def second_phase():
 
     fd.girar(-45)
     while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
-        fd.movimientoRecto(10)
+        fd.movimientoRecto(5)
 
     fd.girar(123)
     fd.movimientoRecto(-130)
@@ -304,7 +313,7 @@ def second_phase():
     # Fase 1.3: Levantar la pipa
     # =========================================
 
-    fd.movimientoRecto(290)
+    fd.movimientoRecto(305)
     fd.girar(90)
 
     ge.cerrar_hasta_top()
@@ -319,17 +328,17 @@ def second_phase():
     
     fd.movimientoRecto(-250)
     fd.girar(-90)
-    fd.movimientoRecto(-100)
+    fd.movimientoRecto(-150)
 
     fd.girar(90)
     while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
-        fd.movimientoRecto(-10)
+        fd.movimientoRecto(-5)
 
     fd.girar(-90)
     fd.movimientoRecto(-200)
 
+    ge.moverElevadorGrua(False,330)
+
     wait(500)
 
-alternate_start()
-first_phase()
 second_phase()
