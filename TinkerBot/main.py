@@ -346,65 +346,41 @@ def second_phase():
 
 def third_phase():
 
-    fd.girar(-45)
-    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
-        fd.movimientoRecto(10)
+    #fd.girar(-45)
+    #while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+        #fd.movimientoRecto(10)
 
-    fd.girar(123)
-    fd.movimientoRecto(-130)
+    #fd.girar(123)
+    #fd.movimientoRecto(-130)
+    #fd.girar(-90)
+
+    #ge.cerrar_hasta_top()
+    #fd.movimientoRecto(-200)
+
+    fd.movimientoRecto(155)
     fd.girar(-90)
 
-    ge.cerrar_hasta_top()
-    fd.movimientoRecto(-200)
+    fd.movimientoRecto(260)
+    fd.girar(-90)
 
-    fd.movimientoRecto(100)
-    fd.girar(-45)
+    fd.movimientoRecto(110)
+    ge.cerrar_garra()
 
-    fd.movimientoRecto(-130)
+    wait(300)
 
-    fd.girar(-70)
-    fd.movimientoRecto(140)
+    while(sensorColor1.color() != Color.BLACK and sensorColor2.color() != Color.BLACK):
+        fd.movimientoRecto(-2.5)
+    
+    fd.girar(92)
+    fd.movimientoRecto(110)
 
-    df.robot.stop()
-    df.blue_motor.run_angle(-100, 197.5)
+    ge.moverElevadorGrua(True,285)
+    fd.girar(-90)
+    fd.movimientoRecto(40)
 
-        #bloque rojo 1
+    ge.moverElevadorGrua(False,60)
+
+    ge.grua_motor.stop()
     ge.abrir_garra()
-    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
-        print("Buscando Rojo")
-        fd.movimientoRecto(-10)
 
-    fd.movimientoRecto(270)
-
-    ge.cerrar_hasta_top()
-    ge.moverElevadorGrua(True,285)
-
-        #bloque rojo 2
-    fd.movimientoRecto(100)
-    ge.abrir_garra()
-    ge.moverElevadorGrua(False,290)
-    ge.cerrar_hasta_top()
-    ge.moverElevadorGrua(True,285)
-
-        #bloque amarillo 1
-    fd.movimientoRecto(100)
-    ge.drop()
-    ge.moverElevadorGrua(False,290)
-    ge.abrir_garra()
-    ge.cerrar_hasta_top()
-    ge.moverElevadorGrua(True,285)
-        
-        #bloque amarillo 2
-    fd.movimientoRecto(100)
-    ge.drop()
-    ge.moverElevadorGrua(False,290)
-    ge.cerrar_hasta_top()
-    ge.moverElevadorGrua(True,285)
-
-        #salirse de casas 1
-    fd.girar(-70)
-    fd.movimientoRecto(800)
-
-#third_phase()
-
-
+third_phase()
