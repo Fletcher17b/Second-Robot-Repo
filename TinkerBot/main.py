@@ -346,6 +346,9 @@ def second_phase():
 
 def third_phase():
 
+    #estos hijueputas del otro grupo usan el rojo
+    #asi nunca falla :(
+
 
     #subimos la grua un poquitito para reducir friccion
     ge.moverElevadorGrua(True,25)
@@ -369,9 +372,9 @@ def third_phase():
     fd.girar(90)
 
 
-    #emilio, checkea tu line-tracking
+###LO QUE QUEREMOS; ES QUE SE "ENLLAVE" en esto
     if(sensorColor1.color() == Color.WHITE and sensorColor2.color() == Color.WHITE):
-        fd.movimientoRecto(85)
+        fd.movimientoRecto(90)
         
         #la primera distancia paralela a los bloques antes del primero desde los sensores
         #registrando el color blanco por primera vez, hasta el medio del primer bloque
