@@ -348,18 +348,30 @@ def third_phase():
 
 
     #subimos la grua un poquitito para reducir friccion
-    ge.moverElevadorGrua(True,10)
-    fd.movimientoRecto(150)
+    ge.moverElevadorGrua(True,25)
+    fd.movimientoRecto(145)
     #avanza hasta que, al girar, los sensores esten perpendiculares a las lineas blancas
     fd.girar(-90)
 
     #avanzamos ese poquitito para poner los sensores sobre el blanco iniciial
-    fd.movimientoRecto(10)
+    fd.movimientoRecto(255)
+
+    fd.girar(-90)
+
+    fd.movimientoRecto(90)
+    #a veces cierra DEMASIADO Fuerte
+    ge.cerrar_garra()
+    wait(300)
+
+    ge.moverElevadorGrua(True,280)
+    fd.movimientoRecto(-80)
+    #retrocede para alinear con blancos
+    fd.girar(90)
 
 
     #emilio, checkea tu line-tracking
-    while(sensorColor1.color() == Color.WHITE and sensorColor2.color() == Color.WHITE):
-        fd.movimientoRecto(120)
+    if(sensorColor1.color() == Color.WHITE and sensorColor2.color() == Color.WHITE):
+        fd.movimientoRecto(85)
         
         #la primera distancia paralela a los bloques antes del primero desde los sensores
         #registrando el color blanco por primera vez, hasta el medio del primer bloque
@@ -371,18 +383,9 @@ def third_phase():
         #y ejecutar funcion de bloques
     #EMILIO LEE ESTO TRABAJA HACE ALGO LOCO
         
-    fd.girar(-90)
+    
 
     #avanza para agarrar primera roja
-    fd.movimientoRecto(87) 
-    ge.cerrar_garra()
-
-    wait(300)
-
-    #retrocede hasta encontrar rojo
-
-    while(sensorColor1.color() != Color.BLACK and sensorColor2.color() != Color.BLACK):
-        fd.movimientoRecto(-5)
 
 
     #todo lo que esta abajo de esto debe ir comentado bien una vez se implemente lo que esta arriba
