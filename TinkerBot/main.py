@@ -9,7 +9,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 # =============================================================================
-
+from random import randint
 import threading
 #Esto no fue posible de modularizar, por lo que se tuvo que hacer en el main
 #Sin embargo, el hecho de que las funciones no se puedan modularizar, hace que entonces
@@ -20,7 +20,7 @@ ev3 = EV3Brick()
 
 sensorColor1 = ColorSensor(Port.S1)
 sensorColor2 = ColorSensor(Port.S4)
-sensorColor3 = ColorSensor(Port.S3)
+#sensorColor3 = ColorSensor(Port.S3)
 
 robot_speaker = ev3.speaker
 
@@ -147,7 +147,7 @@ def first_phase():
     ge.moverElevadorGrua(True,90)
 
     # Movemos el robot hacia adelante para alinearnos con la primera pipa
-    fd.movimientoRecto(105) # El robot se mueve 8cm hacia adelante
+    fd.movimientoRecto(95) # El robot se mueve 8cm hacia adelante
 
     wait(500) # Esperamos medio segundo para marcar el final de la fase
 
@@ -178,7 +178,7 @@ def first_phase():
     fd.girar(87)
 
     # Avanzamos hacia el escombro gris para posicionarnos
-    fd.movimientoRecto(87)
+    fd.movimientoRecto(91) # in val 87
 
     # Bajamos la grua para dejar el escombro amarillo ligeramente
     ge.moverElevadorGrua(False,140)
@@ -227,32 +227,44 @@ def first_phase():
 
     # Nos giramos hacia el basurero y depositamos los escombros
     fd.girar(77)
-    fd.movimientoRecto(200) # Movemos 8cm contra el basurero
+    fd.movimientoRecto(200) # Movemos 8cm contra el basurero in val 200
 
     ge.abrir_garra() # Abrimos la garra
     wait(500)
 
     ge.moverElevadorGrua(False,280) # Bajamos la grua para depositar los escombros
     fd.movimientoRecto(-200) # Deshacemos los 8cm que nos movimos
+    ge.moverElevadorGrua(True,100) 
     wait(1000)
+
+    # =========================================
+    #Bonus
+    # =========================================
+
+    fd.girar(90)
+    fd.movimientoRecto(1550)
+
+    fd.girar(90)
+    fd.movimientoRecto(600)
+    
 
     # =========================================
     # Fase 1.6: Alineación Final
     # =========================================
 
     # Vamos en contra a la pista inicial
-    fd.girar(-90)
+    #fd.girar(-90)
 
     # Hacemos un avance inicial
-    fd.movimientoRecto(-150)
+    #fd.movimientoRecto(-150)
 
     # Hacemos un bucle de tanteo hasta que encontramos rojo (de la pista inicial)
-    while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
-        fd.movimientoRecto(-10)
+   # while(sensorColor1.color() != Color.RED and sensorColor2.color() != Color.RED):
+   #     fd.movimientoRecto(-10)
     
     # Cuando lo encontremos nos alineamos contra la pared
-    fd.girar(-90)
-    fd.movimientoRecto(-200)
+   # fd.girar(-90)
+   # fd.movimientoRecto(-200)
 
     
 def second_phase():
@@ -434,4 +446,24 @@ def third_phase():
     ge.moverElevadorGrua(True,280)
 
 
-third_phase()
+
+
+def beepboop():
+    while True:
+        wait(30)
+        num = randint(1, 3)
+
+        if num == 1:
+            ev3.speaker.beep()
+        elif num == 2:
+            ev3.speaker.beep()
+            ev3.speaker.beep()
+        elif num == 3:
+            ev3.speaker.say("boop")
+
+
+threadone = threading.Thread(target=first_phase())
+threadtwo = threading.Thread(target=beepboop())
+
+threadone.start()
+threadtwo.start()
