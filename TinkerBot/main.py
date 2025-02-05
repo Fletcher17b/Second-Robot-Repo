@@ -8,7 +8,9 @@ from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
 from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
-# =============================================================================
+
+# =========================================
+# ====================================
 
 import threading
 #Esto no fue posible de modularizar, por lo que se tuvo que hacer en el main
@@ -434,4 +436,27 @@ def third_phase():
     ge.moverElevadorGrua(True,280)
 
 
-third_phase()
+
+
+def showcase():
+    first_phase()
+
+def main():
+    # 
+    #   
+
+    threadmovement = threading.Thread(target=first_phase)
+    threadsong = threading.Thread(target=play_song)  
+
+    threadmovement.start()
+    threadsong.start()
+    
+    
+    play_song()
+
+main()
+
+
+""" if __name__ == "__main__":
+    main()
+ """
